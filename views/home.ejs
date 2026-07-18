@@ -1,0 +1,13 @@
+﻿<%- include("./partials/nav.ejs") %>
+
+<main>
+    <h1>NextRead</h1>
+
+    <% if (user) { %>
+        <p>Welcome, <%= user.username %>.</p>
+    <% } else { %>
+        <p>Nothing here yet</p>
+    <% } %>
+</main>
+</body>
+</html>

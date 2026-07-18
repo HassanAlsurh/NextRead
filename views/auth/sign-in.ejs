@@ -1,0 +1,45 @@
+﻿<%- include("../partials/nav.ejs") %>
+
+<main class="page-container">
+    <section class="auth-card">
+        <div class="auth-card-header">
+            <h1 class="auth-card-title">Sign In</h1>
+            <p class="auth-card-subtitle">
+                Enter your account details to continue.
+            </p>
+        </div>
+
+        <form class="auth-form" action="/auth/sign-in" method="POST">
+            <div class="form-group">
+                <label class="form-label" for="username">Username</label>
+                <input
+                    class="form-input"
+                    type="text"
+                    name="username"
+                    id="username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input
+                    class="form-input"
+                    type="password"
+                    name="password"
+                    id="password"
+                    required
+                >
+            </div>
+
+            <button class="primary-button" type="submit">Sign In</button>
+        </form>
+
+        <p class="auth-card-footer">
+            Do not have an account?
+            <a class="text-link" href="/auth/sign-up">Sign Up</a>
+        </p>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <nav class="site-nav">
+        <a class="site-nav-brand" href="/">NextRead</a>
+
+        <div class="site-nav-links">
+            <a class="site-nav-link" href="/">Home</a>
+
+            <% if (user) { %>
+                <a class="site-nav-link" href="/dashboard">Dashboard</a>
+
+                <form
+                    class="site-nav-form"
+                    action="/auth/sign-out?_method=DELETE"
+                    method="POST"
+                >
+                    <button class="site-nav-button" type="submit">
+                        Sign Out
+                    </button>
+                </form>
+            <% } else { %>
+                <a class="site-nav-link" href="/auth/sign-up">Sign Up</a>
+                <a class="site-nav-link" href="/auth/sign-in">Sign In</a>
+            <% } %>
+        </div>
+    </nav>
