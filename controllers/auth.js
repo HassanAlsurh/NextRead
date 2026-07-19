@@ -1,5 +1,28 @@
 ﻿const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
+const cloudinary = require("../config/cloudinary.js");
+
+const uploadImage = (fileBuffer) => {
+  return new Promise((resolve, reject) => {
+    const uploadStream = cloudinary.uploader.upload_stream(
+      {
+        folder: "open-house/listings",
+        resource_type: "image",
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result);
+        }
+      },
+    );
+
+    uploadStream.end(fileBuffer);
+  });
+};
+
 
 const home = (req, res) => {
   res.render("home.ejs", {
@@ -39,7 +62,7 @@ const signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const userData = {
-        email: req.body.email,
+      email: req.body.email,
       username: req.body.username,
       password: hashedPassword,
     };
@@ -104,11 +127,110 @@ const signOut = (req, res) => {
   });
 };
 
+const showEditUser = async (req, res) => {
+  res.render("auth/edit-user.ejs", { user: req.session.user });
+};
+
+const editUser = async (req, res) => {
+  try {
+    let username;
+    let CurrentPassword;
+    let NewPassword;
+    let confirmNewPassword;
+
+    const currentUser = await User.findById(req.session.user.id);
+    console.log(currentUser);
+
+    if (!currentUser) {
+      return res.render("auth/sign-in.ejs");
+    }
+
+    console.log("body: ", req.body);
+
+    if (req.body) {
+      username = req.body.username;
+      CurrentPassword = req.body.CurrentPassword;
+      NewPassword = req.body.NewPassword;
+      confirmNewPassword = req.body.confirmNewPassword;
+
+      if (CurrentPassword) {
+        const validPassword = bcrypt.compareSync(
+          CurrentPassword,
+          currentUser.password,
+        );
+
+        console.log(validPassword);
+        if (validPassword) {
+          if (NewPassword === confirmNewPassword) {
+            const newHashedPassword = await bcrypt.hash(NewPassword, 10);
+
+            currentUser.password = newHashedPassword;
+          } else {
+            return res.render("error.ejs", {
+              msg: "password and confirm password are not identical",
+            });
+          }
+          console.log("valid password");
+        }
+      }
+    }
+
+    if (username) {
+      if (username !== currentUser.username) {
+        currentUser.username = username;
+        console.log("Username");
+        req.session.user.username = username;
+      }
+    }
+
+    const oldPublicId = currentUser.profilePicture?.publicId;
+
+    console.log("file: ", req.file);
+    if (req.file) {
+      console.log("file exists");
+
+      const uploadedImage = await uploadImage(req.file.buffer);
+
+      console.log("inside the IF");
+
+      currentUser.profilePicture = {
+        url: uploadedImage.secure_url,
+        publicId: uploadedImage.public_id,
+      };
+
+      console.log("middle of IF");
+
+      if (oldPublicId) {
+        try {
+          await cloudinary.uploader.destroy(oldPublicId, {
+            invalidate: true,
+          });
+        } catch (cloudinaryError) {
+          console.log("Could not delete the old image:", cloudinaryError);
+        }
+      }
+    }
+
+    const print = await currentUser.save();
+    console.log("print: ", print);
+
+    req.session.save(() => {
+      res.redirect("/");
+      console.log('session saved')
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const dashboard = (req, res) => {
   res.render("dashboard.ejs", {
     user: req.session.user,
   });
 };
+
+
 
 module.exports = {
   home,
@@ -117,5 +239,7 @@ module.exports = {
   showSignInForm,
   signIn,
   signOut,
+  showEditUser,
+  editUser,
   dashboard,
 };

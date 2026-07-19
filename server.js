@@ -8,7 +8,10 @@ const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
 const methodOverride = require("method-override");
 const { MongoStore } = require("connect-mongo");
+
 const upload = require("./config/multer");
+const cloudinary = require("./config/cloudinary.js");
+
 const session = require("express-session");
 const mongoose = require("mongoose");
 const express = require("express");
@@ -25,14 +28,14 @@ app.use(methodOverride("_method"));
 app.use(morgan("dev"));
 
 app.use(
-    session({
-        secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
-        store: MongoStore.create({
-            mongoUrl: process.env.MONGODB_URI,
-        }),
-    })
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    }),
+  }),
 );
 
 app.use(passUserToView);
@@ -42,25 +45,31 @@ app.get("/auth/sign-up", authCtrl.showSignUpForm);
 app.post("/auth/sign-up", authCtrl.signUp);
 app.get("/auth/sign-in", authCtrl.showSignInForm);
 app.post("/auth/sign-in", authCtrl.signIn);
-app.delete("/auth/sign-out", authCtrl.signOut);
+app.delete("/auth/sign-out", isSignedIn, authCtrl.signOut);
 
-app.get("/dashboard", isSignedIn, authCtrl.dashboard);
+app.get("/auth/:userId", isSignedIn, authCtrl.showEditUser);
+// /auth/<%= user.id %>/edit?_method=PUT
+app.put(
+  "/auth/:userId/edit",
+  isSignedIn,
+  upload.single("image"),
+  authCtrl.editUser,
+);
 
-
-
+app.get("/dashboard", isSignedIn, authCtrl.dashboard); //maybe for later 'Wishlist "2"'
 
 const startServer = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
 
-        console.log(`Connected to MongoDB: ${mongoose.connection.name}`);
+    console.log(`Connected to MongoDB: ${mongoose.connection.name}`);
 
-        app.listen(PORT, () => {
-            console.log(`Listening on ${PORT}`);
-        });
-    } catch (error) {
-        console.log("MongoDB connection error:", error.message);
-    }
+    app.listen(PORT, () => {
+      console.log(`Listening on ${PORT}`);
+    });
+  } catch (error) {
+    console.log("MongoDB connection error:", error.message);
+  }
 };
 
 startServer();

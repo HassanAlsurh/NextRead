@@ -8,6 +8,10 @@
     <% } else { %>
         <p>Nothing here yet</p>
     <% } %>
+
+    <% if (user) { %>
+        <a href="/auth/<%= user.id %>">auth edit page</a>
+    <% } %>
 </main>
 </body>
 </html>
