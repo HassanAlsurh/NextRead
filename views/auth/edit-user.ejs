@@ -1,0 +1,81 @@
+<%- include("../partials/nav.ejs") %>
+    <main class="page-container">
+      <section class="auth-card">
+        <div class="auth-card-header">
+          <h1 class="auth-card-title">Account Details</h1>
+          <p class="auth-card-subtitle">
+            Edit your account details
+          </p>
+        </div>
+
+        <form class="auth-form" action="/auth/sign-up" method="POST">
+          <div class="form-group">
+            <label for="image">Profile Picture: </label>
+            <input
+              type="file"
+              name="image"
+              id="image"
+              accept="image/jpeg,image/png,image/webp"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="username">Username</label>
+            <input
+              class="form-input"
+              type="text"
+              name="username"
+              id="username"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="CurrentPassword"
+              >Current Password</label
+            >
+            <input
+              class="form-input"
+              type="password"
+              name="CurrentPassword"
+              id="CurrentPassword"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="NewPassword">New Password</label>
+            <input
+              class="form-input"
+              type="password"
+              name="NewPassword"
+              id="NewPassword"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="confirmPassword"
+              >Comnfirm New Password</label
+            >
+            <input
+              class="form-input"
+              type="password"
+              name="confirmNewPassword"
+              id="confirmNewPassword"
+              required
+            />
+          </div>
+
+          <button class="primary-button" type="submit">Sign Up</button>
+        </form>
+
+        <p class="auth-card-footer">
+          Already have an account?
+          <a class="text-link" href="/auth/sign-in">Sign In</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
