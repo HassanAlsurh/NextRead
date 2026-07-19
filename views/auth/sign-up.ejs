@@ -11,6 +11,16 @@
 
         <form class="auth-form" action="/auth/sign-up" method="POST">
             <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input
+                    class="form-input"
+                    type="email"
+                    name="email"
+                    id="email"
+                    required
+                >
+            </div>
+            <div class="form-group">
                 <label class="form-label" for="username">Username</label>
                 <input
                     class="form-input"
@@ -28,6 +38,17 @@
                     type="password"
                     name="password"
                     id="password"
+                    required
+                >
+            </div>
+
+                        <div class="form-group">
+                <label class="form-label" for="confirmPassword">Comnfirm Password</label>
+                <input
+                    class="form-input"
+                    type="password"
+                    name="confirmPassword"
+                    id="confirmPassword"
                     required
                 >
             </div>
