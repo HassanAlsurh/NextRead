@@ -23,7 +23,6 @@ const uploadImage = (fileBuffer) => {
   });
 };
 
-
 const home = (req, res) => {
   res.render("home.ejs", {
     user: req.session.user,
@@ -72,6 +71,7 @@ const signUp = async (req, res) => {
     req.session.user = {
       username: user.username,
       id: user.id,
+      image: user.profilePicture.url,
     };
 
     req.session.save(() => {
@@ -114,6 +114,7 @@ const signIn = async (req, res) => {
   req.session.user = {
     username: userInDatabase.username,
     id: userInDatabase.id,
+    image: userInDatabase.profilePicture.url,
   };
 
   req.session.save(() => {
@@ -139,13 +140,10 @@ const editUser = async (req, res) => {
     let confirmNewPassword;
 
     const currentUser = await User.findById(req.session.user.id);
-    console.log(currentUser);
 
     if (!currentUser) {
       return res.render("auth/sign-in.ejs");
     }
-
-    console.log("body: ", req.body);
 
     if (req.body) {
       username = req.body.username;
@@ -159,7 +157,6 @@ const editUser = async (req, res) => {
           currentUser.password,
         );
 
-        console.log(validPassword);
         if (validPassword) {
           if (NewPassword === confirmNewPassword) {
             const newHashedPassword = await bcrypt.hash(NewPassword, 10);
@@ -170,35 +167,39 @@ const editUser = async (req, res) => {
               msg: "password and confirm password are not identical",
             });
           }
-          console.log("valid password");
+        } else {
+          return res.render("error.ejs", {
+            msg: "invalid password",
+          });
         }
       }
     }
 
     if (username) {
       if (username !== currentUser.username) {
-        currentUser.username = username;
-        console.log("Username");
-        req.session.user.username = username;
+        const usernameExist = await User.findOne({
+          username: req.body.username,
+        });
+        if (!usernameExist) {
+          currentUser.username = username;
+          req.session.user.username = username;
+        } else {
+          return res.render("error.ejs", {
+            msg: "Username is taken",
+          });
+        }
       }
     }
-
     const oldPublicId = currentUser.profilePicture?.publicId;
-
-    console.log("file: ", req.file);
     if (req.file) {
-      console.log("file exists");
-
       const uploadedImage = await uploadImage(req.file.buffer);
-
-      console.log("inside the IF");
 
       currentUser.profilePicture = {
         url: uploadedImage.secure_url,
         publicId: uploadedImage.public_id,
       };
 
-      console.log("middle of IF");
+      req.session.user.image = currentUser.profilePicture.url;
 
       if (oldPublicId) {
         try {
@@ -212,13 +213,11 @@ const editUser = async (req, res) => {
     }
 
     const print = await currentUser.save();
-    console.log("print: ", print);
 
     req.session.save(() => {
       res.redirect("/");
-      console.log('session saved')
+      console.log("session saved");
     });
-
   } catch (error) {
     console.log(error);
   }
@@ -229,8 +228,6 @@ const dashboard = (req, res) => {
     user: req.session.user,
   });
 };
-
-
 
 module.exports = {
   home,

@@ -13,7 +13,15 @@
           method="POST"
           enctype="multipart/form-data"
         >
-
+        <center>
+          <div class='Edit-Profile-PFP'>
+            <% if (user.image) { %>
+              <img src="<%= user.image %>" alt="User's profile picture" >
+            <% } else {%>
+            <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg" alt="Default profile picture" >
+            <% } %>
+          </div>
+        </center>
           <div class="form-group">
             <label for="image">Profile Picture: </label>
             <input

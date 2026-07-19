@@ -48,13 +48,7 @@ app.post("/auth/sign-in", authCtrl.signIn);
 app.delete("/auth/sign-out", isSignedIn, authCtrl.signOut);
 
 app.get("/auth/:userId", isSignedIn, authCtrl.showEditUser);
-// /auth/<%= user.id %>/edit?_method=PUT
-app.put(
-  "/auth/:userId/edit",
-  isSignedIn,
-  upload.single("image"),
-  authCtrl.editUser,
-);
+app.put("/auth/:userId/edit", isSignedIn, upload.single("image"), authCtrl.editUser,);
 
 app.get("/dashboard", isSignedIn, authCtrl.dashboard); //maybe for later 'Wishlist "2"'
 

@@ -15,7 +15,14 @@
 
             <% if (user) { %>
                 <a class="site-nav-link" href="/dashboard">Dashboard</a>
-
+                
+                <div class="pfp">
+                    <% if (user.image) { %>
+                        <img src="<%= user.image %>" alt="User's profile picture" >
+                        <% } else { %>
+                            <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg" alt="Default profile picture" >
+                            <% } %>
+                        </div>
                 <form
                     class="site-nav-form"
                     action="/auth/sign-out?_method=DELETE"
