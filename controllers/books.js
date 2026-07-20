@@ -1,6 +1,8 @@
 const User = require("../models/user");
+const Book = require("../models/book");
 const multer = require("multer");
 const cloudinary = require("../config/cloudinary.js");
+const upload = require("../config/multer.js");
 
 const showAllBooks = async (req, res) => {
   res.render("books/index.ejs");
@@ -14,37 +16,49 @@ const showNewBook = async (req, res) => {
 const showEditbook = async (req, res) => {
   res.render("books/edit.ejs");
 };
-const addBook = async (req,res) => {
-    try {
-        let toupload = {}
-
-        toupload.bookTitle = req.body.bookTitle
-        toupload.bookAuthor = req.body.bookAuthor
-        toupload.genre = []
-
-        if (req.body.genre && req.body.genre.length > 1) {
-            req.body.genre.forEach((item) => {
-                toupload.genre.push(item)
-            });
-            
-        }
-
-        toupload.summary= req.body.summary
-        toupload.userThoughts= req.body.userThoughts
-        toupload.userId = req.session.user.id;
-
-
-        // bookCover
-
-        console.log(toupload)
-
-
-    } catch (error) {
-        console.log(error.message);
+const addBook = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.render("error.ejs", {
+        msg: "Please select an image.",
+      });
     }
-}
+    const uploadedImage = await uploadImage(req.file.buffer);
+
+    let toupload = {};
+
+    toupload.bookTitle = req.body.bookTitle;
+    toupload.bookAuthor = req.body.bookAuthor;
+    toupload.genre = [];
+
+    if (req.body.genre) {
+      if (Array.isArray(req.body.genre)) {
+        req.body.genre.forEach((item) => {
+          toupload.genre.push(item);
+        });
+      } else {
+        toupload.genre.push(req.body.genre);
+      }
+    } 
+
+    toupload.summary = req.body.summary;
+    toupload.userThoughts = req.body.userThoughts;
+    toupload.userId = req.session.user.id;
+
+    // bookCover
+    toupload.bookCover = {
+      url: uploadedImage.secure_url,
+      publicId: uploadedImage.public_id,
+    };
 
 
+    await Book.create(toupload)
+
+    res.redirect('/books')
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 
 const uploadImage = (fileBuffer) => {
   return new Promise((resolve, reject) => {
