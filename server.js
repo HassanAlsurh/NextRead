@@ -4,6 +4,8 @@ dns.setServers(["8.8.8.8", "1.1.1.1"]);
 require("dotenv").config();
 
 const authCtrl = require("./controllers/auth.js");
+const booksCtrl = require("./controllers/books.js");
+const commentsCtrl = require("./controllers/comments.js");
 const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
 const methodOverride = require("method-override");
@@ -41,16 +43,29 @@ app.use(
 app.use(passUserToView);
 
 app.get("/", authCtrl.home);
+// Auth
 app.get("/auth/sign-up", authCtrl.showSignUpForm);
 app.post("/auth/sign-up", authCtrl.signUp);
 app.get("/auth/sign-in", authCtrl.showSignInForm);
 app.post("/auth/sign-in", authCtrl.signIn);
 app.delete("/auth/sign-out", isSignedIn, authCtrl.signOut);
-
 app.get("/auth/:userId", isSignedIn, authCtrl.showEditUser);
-app.put("/auth/:userId/edit", isSignedIn, upload.single("image"), authCtrl.editUser,);
+app.put(
+  "/auth/:userId/edit",
+  isSignedIn,
+  upload.single("image"),
+  authCtrl.editUser,
+);
+// Admin only
+app.get("/dashboard", isSignedIn, authCtrl.dashboard); //maybe for later 'Wishlist "2"'====================================================================================
+// Books
+app.get("/books", booksCtrl.showAllBooks);
+app.get("/books/new", isSignedIn, booksCtrl.showNewBook);
+app.get("/books/:bookId", booksCtrl.showBook);
+app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook);
 
-app.get("/dashboard", isSignedIn, authCtrl.dashboard); //maybe for later 'Wishlist "2"'
+app.post("/books", isSignedIn, booksCtrl.addBook);
+// =====================================================
 
 const startServer = async () => {
   try {
