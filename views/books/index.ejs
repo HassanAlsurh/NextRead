@@ -1,3 +1,34 @@
-<%- include("./partials/nav.ejs") %>
-</body>
+<%- include("../partials/nav.ejs") %>
+
+    <div class="books-container">
+      <% books.forEach((item) => { %>
+      <div class="a-book-container">
+        <img src="<%= item.bookCover.url %>" alt="">
+        <%= item.bookTitle %>
+        <%= item.bookAuthor %>
+        <div class="genres">
+          <% item.genre.forEach((genre) => { %>
+          <div class="a-genre-pill">
+            <%= genre %>
+          </div>
+          <% }) %>
+        </div>
+        <div class="summary-container">
+          <%= item.summary %>
+        </div>
+        <div class="user-thoughts-container">
+          <%= item.userThoughts %>
+        </div>
+
+        <div class="meta-info">
+          <span><%= item.createdAt.toLocaleDateString() %></span> 
+
+          <% if (item.createdAt.getTime() !== item.updatedAt.getTime()) { %>
+          <span class="edited-badge">(Edited)</span>
+          <% } %>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </body>
 </html>

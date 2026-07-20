@@ -5,7 +5,9 @@ const cloudinary = require("../config/cloudinary.js");
 const upload = require("../config/multer.js");
 
 const showAllBooks = async (req, res) => {
-  res.render("books/index.ejs");
+  const foundBooks = await Book.find({});
+  console.log(foundBooks)
+  res.render("books/index.ejs", { books: foundBooks });
 };
 const showBook = async (req, res) => {
   res.render("books/show.ejs");
@@ -52,7 +54,7 @@ const addBook = async (req, res) => {
         msg: "Please add the summary.",
       });
     }
-    
+
     if (req.body.userThoughts) {
       toupload.userThoughts = req.body.userThoughts;
     } else {
@@ -76,6 +78,9 @@ const addBook = async (req, res) => {
     console.log(error.message);
   }
 };
+
+const editBook = async (req, res) => {};
+const deleteBook = async (req, res) => {};
 
 const uploadImage = (fileBuffer) => {
   return new Promise((resolve, reject) => {
@@ -103,4 +108,6 @@ module.exports = {
   showNewBook,
   showEditbook,
   addBook,
+  editBook,
+  deleteBook,
 };
