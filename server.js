@@ -64,7 +64,7 @@ app.get("/books/new", isSignedIn, booksCtrl.showNewBook);
 app.get("/books/:bookId", booksCtrl.showBook);
 app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook);
 
-app.post("/books", isSignedIn, booksCtrl.addBook);
+app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook);
 // =====================================================
 
 const startServer = async () => {

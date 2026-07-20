@@ -1,3 +1,4 @@
+const BOOK_GENRES = require("../constants/genres");
 const mongoose = require("mongoose");
 
 const bookSchema = new mongoose.Schema(
@@ -22,6 +23,13 @@ const bookSchema = new mongoose.Schema(
     },
     genre: {
       // type: enum!!,
+      type: [{
+        type: String,
+        enum: {
+          values: BOOK_GENRES,
+          message: '{VALUE} is not a valid book genre.'
+        }
+      }],
       required: true,
     },
     summary: {
