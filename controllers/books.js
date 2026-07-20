@@ -39,10 +39,28 @@ const addBook = async (req, res) => {
       } else {
         toupload.genre.push(req.body.genre);
       }
-    } 
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please select at least 1 genre.",
+      });
+    }
 
-    toupload.summary = req.body.summary;
-    toupload.userThoughts = req.body.userThoughts;
+    if (req.body.summary) {
+      toupload.summary = req.body.summary;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the summary.",
+      });
+    }
+    
+    if (req.body.userThoughts) {
+      toupload.userThoughts = req.body.userThoughts;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the User Thoughts.",
+      });
+    }
+
     toupload.userId = req.session.user.id;
 
     // bookCover
@@ -51,10 +69,9 @@ const addBook = async (req, res) => {
       publicId: uploadedImage.public_id,
     };
 
+    await Book.create(toupload);
 
-    await Book.create(toupload)
-
-    res.redirect('/books')
+    res.redirect("/books");
   } catch (error) {
     console.log(error.message);
   }
