@@ -1,7 +1,19 @@
 <%- include("../partials/nav.ejs") %>
 
     <div class="books-listing-container">
-  
+
+      <% if (book.userId._id.equals(user.id)) { %>
+  <div class="owner-controlls-container">
+    <form action="/books/<%= book._id %>/?_method=DELETE" method="post">
+      <button type="submit">Delete Post</button>
+    </form>
+    <div class="edit-listing">
+      <a href="/books/<%= book._id %>/edit">Edit Post</a>
+    </div>
+  </div>      
+  <% } %>
+
+
       <div class="a-book-container">
         <img src="<%= book.bookCover.url %>" alt="<%= book.bookTitle %> book cover">
         <%= book.bookTitle %>
@@ -28,7 +40,7 @@
           <% } %>
         </div>
       </div>
-     
+
     </div>
   </body>
 </html>
