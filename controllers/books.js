@@ -106,7 +106,10 @@ const editBook = async (req, res) => {
         msg: "Unable to find post.",
       });
     }
-    if (foundBook.userId.equals(req.session.user.id)) {
+    console.log("book owner id:>>>>>>>>>>>>>>>>>>", foundBook.userId);
+    console.log("session id:>>>>>>>>>>>>>>>>>>", req.session.user.id);
+
+    if (!foundBook.userId.equals(req.session.user.id)) {
       return res.render("error.ejs", {
         msg: "You do not have the permission to edit this post.",
       });
@@ -172,11 +175,9 @@ const editBook = async (req, res) => {
       });
     }
 
+    await foundBook.save();
 
-    await foundBook.save()
-
-
-     if (req.file && oldPublicId) {
+    if (req.file && oldPublicId) {
       try {
         await cloudinary.uploader.destroy(oldPublicId, {
           invalidate: true,
@@ -192,18 +193,20 @@ const editBook = async (req, res) => {
   }
 };
 const deleteBook = async (req, res) => {
-   try {
+  try {
     const bookToDelete = await Book.findById(req.params.bookId);
     if (!bookToDelete) {
       return res.render("error.ejs", {
         msg: "Post does not exist.",
       });
     }
-    if (!bookToDelete.userId.equals(req.session.user._id)) {
+
+    if (!bookToDelete.userId.equals(req.session.user.id)) {
       return res.render("error.ejs", {
         msg: "You do not have permission to delete this post.",
       });
     }
+
     if (bookToDelete.bookCover?.publicId) {
       await cloudinary.uploader.destroy(bookToDelete.bookCover.publicId, {
         invalidate: true,
