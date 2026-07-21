@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const Book = require("../models/book");
+const Comment = require("../models/comment");
 const multer = require("multer");
 const cloudinary = require("../config/cloudinary.js");
 const upload = require("../config/multer.js");
@@ -15,9 +16,11 @@ const showBook = async (req, res) => {
   
   const currentBook = await Book.findById(req.params.bookId);
   const poserDetails = await User.findById(currentBook.userId)
+  const postComments = await Comment.find({bookId: req.params.bookId}).populate('userId')
+// HERE ========================================================================================================================================================================
   console.log("poster details:  >>>", poserDetails);
 
-  res.render("books/show.ejs", { book: currentBook, poster: poserDetails });
+  res.render("books/show.ejs", { book: currentBook, poster: poserDetails, comments: postComments });
 };
 const showNewBook = async (req, res) => {
   res.render("books/new.ejs");

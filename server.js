@@ -70,12 +70,13 @@ app.delete('/books/:bookId', isSignedIn, booksCtrl.deleteBook)
 // Comments
 app.post('/books/:bookId/comments', isSignedIn, commentsCtrl.newComment)
 app.put('/books/:bookId/comments/:commentId',  isSignedIn, commentsCtrl.editComment)
+app.delete('/books/:bookId/comments/:commentId',  isSignedIn, commentsCtrl.deleteComment)
 
 
 // =====================================================
 app.get("/*splat", (req, res) => {
   res.render("error.ejs", {
-    msg: 404,
+    msg: '404 Not Found',
   });
 });
 // =====================================================
