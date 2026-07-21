@@ -68,6 +68,17 @@
             <div class="commenter-PFP"><img src="<%= item.userId.profilePicture.url %>" alt="Profile picture of user <%= item.userId.username %>"></div>
             <div class="commenter-username"><%= item.userId.username %> </div>
             <div class="comment-content"><%= item.comment %></div>
+            <% if (item.userId._id.equals(user.id)) { %>
+               <div class="commenter-controlls-container">
+    <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=DELETE" method="post">
+      <button type="submit">🗑️</button>
+    </form>
+    <div class="edit-comment">
+        <!-- a button to show a popup form to update the comment -->
+    </div>
+  </div>  
+            <% } %>
+             
           </div>
         <% }) %>
       </div>

@@ -10,16 +10,28 @@ const newComment = async (req, res) => {
     toUpload.bookId = req.params.bookId;
 
     await Comment.create(toUpload);
-    res.redirect(`/books/${req.params.bookId}`)
+    res.redirect(`/books/${req.params.bookId}`);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
-const editComment = async (req, res) => {
-  res.send("edited the comment!");
-};
+const editComment = async (req, res) => {};
 const deleteComment = async (req, res) => {
-  res.send("deleted the comment!");
+  try {
+    console.log(req.params.commentId);
+
+    const commentToDelete = await Comment.findByIdAndDelete(
+      req.params.commentId,
+    );
+    if (!commentToDelete) {
+      return res.render("error.ejs", {
+        msg: "Id not found",
+      });
+    }
+    res.redirect(`/books/${req.params.bookId}`);
+  } catch (error) {
+    console.log(error);
+  }
 };
 module.exports = { newComment, editComment, deleteComment };
