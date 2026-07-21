@@ -143,7 +143,7 @@ const editBook = async (req, res) => {
       });
     }
 
-    // toupload.genre = [];
+    foundBook.genre = [];
 
     if (req.body.genre) {
       if (Array.isArray(req.body.genre)) {
@@ -177,6 +177,7 @@ const editBook = async (req, res) => {
 
     await foundBook.save();
 
+
     if (req.file && oldPublicId) {
       try {
         await cloudinary.uploader.destroy(oldPublicId, {
@@ -187,7 +188,7 @@ const editBook = async (req, res) => {
       }
     }
 
-    res.redirect(`/books/${foundBook._id}`);
+    res.redirect(`/books/${req.params.bookId}`);
   } catch (error) {
     console.log(error.message);
   }
