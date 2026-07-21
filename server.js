@@ -59,12 +59,14 @@ app.put(
 // Admin only
 app.get("/dashboard", isSignedIn, authCtrl.dashboard); //maybe for later 'Wishlist "2"'====================================================================================
 // Books
-app.get("/books", booksCtrl.showAllBooks);
-app.get("/books/new", isSignedIn, booksCtrl.showNewBook);
-app.get("/books/:bookId", booksCtrl.showBook);
-app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook);
+app.get("/books", booksCtrl.showAllBooks); //done
+app.get("/books/new", isSignedIn, booksCtrl.showNewBook); //done
+app.get("/books/:bookId", booksCtrl.showBook); //done
+app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook); //done
 
-app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook);
+app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook); //done
+app.put('/books/:bookId',isSignedIn, upload.single("image"), booksCtrl.editBook) 
+app.delete('/books/:bookId', isSignedIn, booksCtrl.deleteBook) 
 // =====================================================
 
 const startServer = async () => {

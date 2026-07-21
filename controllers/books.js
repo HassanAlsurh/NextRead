@@ -35,8 +35,21 @@ const addBook = async (req, res) => {
 
     let toupload = {};
 
-    toupload.bookTitle = req.body.bookTitle;
-    toupload.bookAuthor = req.body.bookAuthor;
+    if (req.body.bookTitle) {
+      toupload.bookTitle = req.body.bookTitle;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the Book Title.",
+      });
+    }
+    if (req.body.bookAuthor) {
+      toupload.bookAuthor = req.body.bookAuthor;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the Book Author.",
+      });
+    }
+
     toupload.genre = [];
 
     if (req.body.genre) {
@@ -85,7 +98,79 @@ const addBook = async (req, res) => {
   }
 };
 
-const editBook = async (req, res) => {};
+const editBook = async (req, res) => {
+  try {
+    let toupload = {};
+
+    if (req.file) {
+      const uploadedImage = await uploadImage(req.file.buffer);
+
+      toupload.bookCover = {
+        url: uploadedImage.secure_url,
+        publicId: uploadedImage.public_id,
+      };
+    }
+
+    if (req.body.bookTitle) {
+      toupload.bookTitle = req.body.bookTitle;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the Book Title.",
+      });
+    }
+    if (req.body.bookAuthor) {
+      toupload.bookAuthor = req.body.bookAuthor;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the Book Author.",
+      });
+    }
+
+    toupload.genre = [];
+
+    if (req.body.genre) {
+      if (Array.isArray(req.body.genre)) {
+        req.body.genre.forEach((item) => {
+          toupload.genre.push(item);
+        });
+      } else {
+        toupload.genre.push(req.body.genre);
+      }
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please select at least 1 genre.",
+      });
+    }
+
+    if (req.body.summary) {
+      toupload.summary = req.body.summary;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the summary.",
+      });
+    }
+
+    if (req.body.userThoughts) {
+      toupload.userThoughts = req.body.userThoughts;
+    } else {
+      return res.render("error.ejs", {
+        msg: "Please add the User Thoughts.",
+      });
+    }
+
+    toupload.userId = req.session.user.id;
+
+    // await Book.create(toupload);
+    const updatedBook = await Book.findByIdAndUpdate(
+      req.params.bookId,
+      toupload,
+    );
+
+    res.redirect(`/books/${updatedBook._id}`);
+  } catch (error) {
+    console.log(error.message);
+  }
+};
 const deleteBook = async (req, res) => {};
 
 const uploadImage = (fileBuffer) => {
