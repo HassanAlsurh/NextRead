@@ -1,9 +1,11 @@
 <%- include("../partials/nav.ejs") %>
 
-    <div class="books-container">
+    <div class="books-listing-container">
       <% books.forEach((item) => { %>
+        <a href="/books/<%= item._id %>">
+  
       <div class="a-book-container">
-        <img src="<%= item.bookCover.url %>" alt="">
+        <img src="<%= item.bookCover.url %>" alt="<%= item.bookTitle %> book cover">
         <%= item.bookTitle %>
         <%= item.bookAuthor %>
         <div class="genres">
@@ -28,6 +30,9 @@
           <% } %>
         </div>
       </div>
+      <hr>
+      <hr>      
+    </a>
       <% }) %>
     </div>
   </body>
