@@ -1,7 +1,19 @@
 <%- include("../partials/nav.ejs") %>
 
-    <div class="books-listing-container">
+
+</div>
       <% books.forEach((item) => { %>
+            <div class="books-listing-container">
+      <div class="poster-details">
+        <% allUsers.forEach((currUser) => { %>
+         <% if (currUser._id.equals(item.userId)) { %>
+          
+          <div class="user-PFP"><img src="<%= currUser.profilePicture.url %>" alt=""></div>
+          <div class="poster-username">
+            <%= currUser.username %>
+          </div>
+          <% } %>
+          <% }) %>
         <a href="/books/<%= item._id %>">
   
       <div class="a-book-container">

@@ -1,6 +1,13 @@
 <%- include("../partials/nav.ejs") %>
 
     <div class="books-listing-container">
+<div class="poster-details">
+  <div class="user-PFP"><img src="<%= poster.profilePicture.url %>" alt=""></div>
+  <div class="poster-username">
+    <%= poster.username %>
+  </div>
+</div>
+
 
       <% if (book.userId._id.equals(user.id)) { %>
   <div class="owner-controlls-container">

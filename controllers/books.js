@@ -6,14 +6,18 @@ const upload = require("../config/multer.js");
 
 const showAllBooks = async (req, res) => {
   const foundBooks = await Book.find({});
+  const allUsers = await User.find() 
   console.log(foundBooks);
-  res.render("books/index.ejs", { books: foundBooks });
+  res.render("books/index.ejs", { books: foundBooks, allUsers });
 };
 const showBook = async (req, res) => {
   console.log("book Id:  >>>", req.params.bookId);
-
+  
   const currentBook = await Book.findById(req.params.bookId);
-  res.render("books/show.ejs", { book: currentBook });
+  const poserDetails = await User.findById(currentBook.userId)
+  console.log("poster details:  >>>", poserDetails);
+
+  res.render("books/show.ejs", { book: currentBook, poster: poserDetails });
 };
 const showNewBook = async (req, res) => {
   res.render("books/new.ejs");

@@ -68,7 +68,12 @@ app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook); //don
 app.put('/books/:bookId',isSignedIn, upload.single("image"), booksCtrl.editBook) 
 app.delete('/books/:bookId', isSignedIn, booksCtrl.deleteBook) 
 // =====================================================
-
+app.get("/*splat", (req, res) => {
+  res.render("error.ejs", {
+    msg: 404,
+  });
+});
+// =====================================================
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
