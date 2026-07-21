@@ -100,41 +100,55 @@ const addBook = async (req, res) => {
 
 const editBook = async (req, res) => {
   try {
+    const foundBook = await Book.findById(req.params.bookId);
+    if (!foundBook) {
+      return res.render("error.ejs", {
+        msg: "Unable to find post.",
+      });
+    }
+    if (foundBook.userId.equals(req.session.user.id)) {
+      return res.render("error.ejs", {
+        msg: "You do not have the permission to edit this post.",
+      });
+    }
+
     let toupload = {};
+
+    const oldPublicId = foundBook.bookCover?.publicId;
 
     if (req.file) {
       const uploadedImage = await uploadImage(req.file.buffer);
 
-      toupload.bookCover = {
+      foundBook.bookCover = {
         url: uploadedImage.secure_url,
         publicId: uploadedImage.public_id,
       };
     }
 
     if (req.body.bookTitle) {
-      toupload.bookTitle = req.body.bookTitle;
+      foundBook.bookTitle = req.body.bookTitle;
     } else {
       return res.render("error.ejs", {
         msg: "Please add the Book Title.",
       });
     }
     if (req.body.bookAuthor) {
-      toupload.bookAuthor = req.body.bookAuthor;
+      foundBook.bookAuthor = req.body.bookAuthor;
     } else {
       return res.render("error.ejs", {
         msg: "Please add the Book Author.",
       });
     }
 
-    toupload.genre = [];
+    // toupload.genre = [];
 
     if (req.body.genre) {
       if (Array.isArray(req.body.genre)) {
         req.body.genre.forEach((item) => {
-          toupload.genre.push(item);
+          foundBook.genre.push(item);
         });
       } else {
-        toupload.genre.push(req.body.genre);
+        foundBook.genre.push(req.body.genre);
       }
     } else {
       return res.render("error.ejs", {
@@ -143,7 +157,7 @@ const editBook = async (req, res) => {
     }
 
     if (req.body.summary) {
-      toupload.summary = req.body.summary;
+      foundBook.summary = req.body.summary;
     } else {
       return res.render("error.ejs", {
         msg: "Please add the summary.",
@@ -151,27 +165,35 @@ const editBook = async (req, res) => {
     }
 
     if (req.body.userThoughts) {
-      toupload.userThoughts = req.body.userThoughts;
+      foundBook.userThoughts = req.body.userThoughts;
     } else {
       return res.render("error.ejs", {
         msg: "Please add the User Thoughts.",
       });
     }
 
-    toupload.userId = req.session.user.id;
 
-    // await Book.create(toupload);
-    const updatedBook = await Book.findByIdAndUpdate(
-      req.params.bookId,
-      toupload,
-    );
+    await foundBook.save()
 
-    res.redirect(`/books/${updatedBook._id}`);
+
+     if (req.file && oldPublicId) {
+      try {
+        await cloudinary.uploader.destroy(oldPublicId, {
+          invalidate: true,
+        });
+      } catch (cloudinaryError) {
+        console.log("Could not delete the old image:", cloudinaryError);
+      }
+    }
+
+    res.redirect(`/books/${foundBook._id}`);
   } catch (error) {
     console.log(error.message);
   }
 };
-const deleteBook = async (req, res) => {};
+const deleteBook = async (req, res) => {
+  
+};
 
 const uploadImage = (fileBuffer) => {
   return new Promise((resolve, reject) => {
