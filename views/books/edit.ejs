@@ -1,3 +1,205 @@
 <%- include("../partials/nav.ejs") %>
-</body>
-</html>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css"
+            rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    </head>
+
+    <body>
+        <main class="page-container">
+            <section class="recommendation-card">
+                <div class="recommendation-card-header">
+                    <h1 class="recommendation-card-title">Upload a book recommendatin</h1>
+                    <p class="recommendation-card-subtitle">
+                        Please enter your book recommendation details below
+                    </p>
+                </div>
+
+                <form class="recommendation-form" action="/books/<%= book._id %>?_method=PUT" method="POST"
+                    enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="form-label" for="bookTitle">Book Title</label>
+                        <input class="form-input" type="text" name="bookTitle" id="bookTitle" required
+                            value="<%= book.bookTitle %>" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="bookAuthor">Book Author</label>
+                        <input class="form-input" type="text" name="bookAuthor" id="bookAuthor" required
+                            value="<%= book.bookAuthor %>" />
+                    </div>
+
+                    <div class="book-cover-image-container">
+                        <img src='<%= book.bookCover.url %>' alt="">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Change Book Cover</label>
+                        <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="genre">Select Book Genres:</label>
+                        <select name="genre" id="genre" multiple size="15">
+                            <optgroup label="Fiction — General & Literary">
+                                <option value="classic-literature" <%=book.genre.includes('classic-literature')
+                                    ? 'selected' : '' %>>Classic Literature</option>
+                                <option value="contemporary-fiction" <%=book.genre.includes('contemporary-fiction')
+                                    ? 'selected' : '' %>>Contemporary Fiction</option>
+                                <option value="historical-fiction" <%=book.genre.includes('historical-fiction')
+                                    ? 'selected' : '' %>>Historical Fiction</option>
+                                <option value="humor-satire" <%=book.genre.includes('humor-satire') ? 'selected' : '' %>
+                                    >Humor & Satire</option>
+                                <option value="literary-fiction" <%=book.genre.includes('literary-fiction') ? 'selected'
+                                    : '' %>>Literary Fiction</option>
+                                <option value="short-stories" <%=book.genre.includes('short-stories') ? 'selected' : ''
+                                    %>>Short Story Collections</option>
+                            </optgroup>
+
+                            <optgroup label="Fiction — Sci-Fi, Fantasy & Horror">
+                                <option value="cyberpunk" <%=book.genre.includes('cyberpunk') ? 'selected' : '' %>
+                                    >Cyberpunk</option>
+                                <option value="dark-fantasy" <%=book.genre.includes('dark-fantasy') ? 'selected' : '' %>
+                                    >Dark Fantasy</option>
+                                <option value="dystopian" <%=book.genre.includes('dystopian') ? 'selected' : '' %>
+                                    >Dystopian & Post-Apocalyptic</option>
+                                <option value="epic-fantasy" <%=book.genre.includes('epic-fantasy') ? 'selected' : '' %>
+                                    >Epic / High Fantasy</option>
+                                <option value="hard-sci-fi" <%=book.genre.includes('hard-sci-fi') ? 'selected' : '' %>
+                                    >Hard Science Fiction</option>
+                                <option value="horror" <%=book.genre.includes('horror') ? 'selected' : '' %>>Horror
+                                </option>
+                                <option value="magical-realism" <%=book.genre.includes('magical-realism') ? 'selected'
+                                    : '' %>>Magical Realism</option>
+                                <option value="paranormal" <%=book.genre.includes('paranormal') ? 'selected' : '' %>
+                                    >Paranormal</option>
+                                <option value="space-opera" <%=book.genre.includes('space-opera') ? 'selected' : '' %>
+                                    >Space Opera</option>
+                                <option value="urban-fantasy" <%=book.genre.includes('urban-fantasy') ? 'selected' : ''
+                                    %>>Urban Fantasy</option>
+                            </optgroup>
+
+                            <optgroup label="Fiction — Mystery, Thriller & Crime">
+                                <option value="cozy-mystery" <%=book.genre.includes('cozy-mystery') ? 'selected' : '' %>
+                                    >Cozy Mystery</option>
+                                <option value="crime-detective" <%=book.genre.includes('crime-detective') ? 'selected'
+                                    : '' %>>Crime & Detective</option>
+                                <option value="legal-thriller" <%=book.genre.includes('legal-thriller') ? 'selected'
+                                    : '' %>>Legal Thriller</option>
+                                <option value="psychological-thriller" <%=book.genre.includes('psychological-thriller')
+                                    ? 'selected' : '' %>>Psychological Thriller</option>
+                                <option value="spy-espionage" <%=book.genre.includes('spy-espionage') ? 'selected' : ''
+                                    %>>Spy & Espionage</option>
+                            </optgroup>
+
+                            <optgroup label="Fiction — Romance">
+                                <option value="contemporary-romance" <%=book.genre.includes('contemporary-romance')
+                                    ? 'selected' : '' %>>Contemporary Romance</option>
+                                <option value="historical-romance" <%=book.genre.includes('historical-romance')
+                                    ? 'selected' : '' %>>Historical Romance</option>
+                                <option value="paranormal-romance" <%=book.genre.includes('paranormal-romance')
+                                    ? 'selected' : '' %>>Paranormal Romance</option>
+                                <option value="romantic-suspense" <%=book.genre.includes('romantic-suspense')
+                                    ? 'selected' : '' %>>Romantic Suspense</option>
+                            </optgroup>
+
+                            <optgroup label="Fiction — Youth & Illustrated">
+                                <option value="childrens" <%=book.genre.includes('childrens') ? 'selected' : '' %>
+                                    >Children’s Books</option>
+                                <option value="comic-book" <%=book.genre.includes('comic-book') ? 'selected' : '' %>
+                                    >Comic Books</option>
+                                <option value="graphic-novel" <%=book.genre.includes('graphic-novel') ? 'selected' : ''
+                                    %>>Graphic Novels</option>
+                                <option value="manga" <%=book.genre.includes('manga') ? 'selected' : '' %>>Manga
+                                </option>
+                                <option value="middle-grade" <%=book.genre.includes('middle-grade') ? 'selected' : '' %>
+                                    >Middle Grade</option>
+                                <option value="new-adult" <%=book.genre.includes('new-adult') ? 'selected' : '' %>>New
+                                    Adult (NA)</option>
+                                <option value="young-adult" <%=book.genre.includes('young-adult') ? 'selected' : '' %>
+                                    >Young Adult (YA)</option>
+                            </optgroup>
+
+                            <optgroup label="Non-Fiction — Biography & History">
+                                <option value="autobiography-memoir" <%=book.genre.includes('autobiography-memoir')
+                                    ? 'selected' : '' %>>Autobiography & Memoir</option>
+                                <option value="biography" <%=book.genre.includes('biography') ? 'selected' : '' %>
+                                    >Biography</option>
+                                <option value="genealogy" <%=book.genre.includes('genealogy') ? 'selected' : '' %>
+                                    >Genealogy & Heritage</option>
+                                <option value="history-military" <%=book.genre.includes('history-military') ? 'selected'
+                                    : '' %>>Military History</option>
+                                <option value="history-world" <%=book.genre.includes('history-world') ? 'selected' : ''
+                                    %>>World History</option>
+                            </optgroup>
+
+                            <optgroup label="Non-Fiction — Lifestyle & Growth">
+                                <option value="cookbooks-food" <%=book.genre.includes('cookbooks-food') ? 'selected'
+                                    : '' %>>Cookbooks & Food</option>
+                                <option value="crafts-hobbies" <%=book.genre.includes('crafts-hobbies') ? 'selected'
+                                    : '' %>>Crafts & Hobbies</option>
+                                <option value="health-fitness" <%=book.genre.includes('health-fitness') ? 'selected'
+                                    : '' %>>Health & Fitness</option>
+                                <option value="parenting-family" <%=book.genre.includes('parenting-family') ? 'selected'
+                                    : '' %>>Parenting & Family</option>
+                                <option value="self-help" <%=book.genre.includes('self-help') ? 'selected' : '' %>
+                                    >Self-Help & Personal Growth</option>
+                                <option value="spirituality-religion" <%=book.genre.includes('spirituality-religion')
+                                    ? 'selected' : '' %>>Spirituality & Religion</option>
+                                <option value="travel" <%=book.genre.includes('travel') ? 'selected' : '' %>>Travel &
+                                    Adventure</option>
+                            </optgroup>
+
+                            <optgroup label="Non-Fiction — Science, Tech & Business">
+                                <option value="business-leadership" <%=book.genre.includes('business-leadership')
+                                    ? 'selected' : '' %>>Business & Leadership</option>
+                                <option value="economics-finance" <%=book.genre.includes('economics-finance')
+                                    ? 'selected' : '' %>>Economics & Personal Finance</option>
+                                <option value="nature-environment" <%=book.genre.includes('nature-environment')
+                                    ? 'selected' : '' %>>Nature & Environment</option>
+                                <option value="psychology" <%=book.genre.includes('psychology') ? 'selected' : '' %>
+                                    >Psychology</option>
+                                <option value="science-technology" <%=book.genre.includes('science-technology')
+                                    ? 'selected' : '' %>>Science & Technology</option>
+                            </optgroup>
+
+                            <optgroup label="Non-Fiction — Arts, Culture & Society">
+                                <option value="art-photography" <%=book.genre.includes('art-photography') ? 'selected'
+                                    : '' %>>Art & Architecture</option>
+                                <option value="essays-journalism" <%=book.genre.includes('essays-journalism')
+                                    ? 'selected' : '' %>>Essays & Journalism</option>
+                                <option value="philosophy" <%=book.genre.includes('philosophy') ? 'selected' : '' %>
+                                    >Philosophy</option>
+                                <option value="poetry-drama" <%=book.genre.includes('poetry-drama') ? 'selected' : '' %>
+                                    >Poetry & Drama</option>
+                                <option value="politics-government" <%=book.genre.includes('politics-government')
+                                    ? 'selected' : '' %>>Politics & Current Affairs</option>
+                                <option value="true-crime" <%=book.genre.includes('true-crime') ? 'selected' : '' %>
+                                    >True Crime</option>
+                            </optgroup>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="summary">Summary</label>
+                        <textarea name="summary" id="summary" rows="4" required><%= book.summary %></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="userThoughts">Your thoughts about the book</label>
+                        <textarea name="userThoughts" id="userThoughts" rows="4" required>
+            <%= book.userThoughts %>
+        </textarea>
+                    </div>
+
+                    <button class="primary-button" type="submit">submit</button>
+                </form>
+            </section>
+        </main>
+    </body>
+
+    </html>
