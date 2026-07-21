@@ -13,13 +13,16 @@ const showBook = async (req, res) => {
   console.log("book Id:  >>>", req.params.bookId);
 
   const currentBook = await Book.findById(req.params.bookId);
-  res.render("books/show.ejs", {book: currentBook});
+  res.render("books/show.ejs", { book: currentBook });
 };
 const showNewBook = async (req, res) => {
   res.render("books/new.ejs");
 };
 const showEditbook = async (req, res) => {
-  res.render("books/edit.ejs");
+  const currentBook = await Book.findById(req.params.bookId);
+  res.render("books/edit.ejs", {
+    book: currentBook,
+  });
 };
 const addBook = async (req, res) => {
   try {
