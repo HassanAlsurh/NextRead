@@ -192,7 +192,31 @@ const editBook = async (req, res) => {
   }
 };
 const deleteBook = async (req, res) => {
-  
+   try {
+    const bookToDelete = await Book.findById(req.params.bookId);
+    if (!bookToDelete) {
+      return res.render("error.ejs", {
+        msg: "Post does not exist.",
+      });
+    }
+    if (!bookToDelete.userId.equals(req.session.user._id)) {
+      return res.render("error.ejs", {
+        msg: "You do not have permission to delete this post.",
+      });
+    }
+    if (bookToDelete.bookCover?.publicId) {
+      await cloudinary.uploader.destroy(bookToDelete.bookCover.publicId, {
+        invalidate: true,
+      });
+    }
+    await bookToDelete.deleteOne();
+    res.redirect("/books");
+  } catch (error) {
+    console.log(error);
+    res.render("error.ejs", {
+      msg: "The Post could not be deleted.",
+    });
+  }
 };
 
 const uploadImage = (fileBuffer) => {
