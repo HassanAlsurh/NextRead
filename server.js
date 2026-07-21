@@ -67,6 +67,11 @@ app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook); //done
 app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook); //done
 app.put('/books/:bookId',isSignedIn, upload.single("image"), booksCtrl.editBook) 
 app.delete('/books/:bookId', isSignedIn, booksCtrl.deleteBook) 
+// Comments
+app.post('/books/:bookId/comments', isSignedIn, commentsCtrl.newComment)
+app.put('/books/:bookId/comments/:commentId',  isSignedIn, commentsCtrl.editComment)
+
+
 // =====================================================
 app.get("/*splat", (req, res) => {
   res.render("error.ejs", {

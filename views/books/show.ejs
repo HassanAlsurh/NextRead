@@ -48,6 +48,30 @@
         </div>
       </div>
 
+      <div class="interactions-container">
+        <!-- likes an ddislikes -->
+      </div>
+
+    </div>
+
+    <div class="comment-section-container">
+      <h2>Commments Section</h2>
+      <div class="add-a-comment">
+    <form action="/books/<%= book._id %>/comments" method="post">
+      <center><textarea name="text" rows="4"  style="width: 80%; " placeholder="Write a comment..."></textarea></center><br/>
+        <button type="submit">Send</button>
+    </form>
+      </div>
+      <div class="comments-container">
+            <ul>
+        <!-- <%# current.questions.forEach((item) => { %> -->
+         <li>
+          <div class="commenter-username"><%#= item.author.username %> </div>
+          <div class="comment-content"><%#= item.text %></div>
+         </li>
+        <!-- <%# }) %> -->
+    </ul>
+      </div>
     </div>
   </body>
 </html>
