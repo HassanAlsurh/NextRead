@@ -5,46 +5,46 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+    <title>Upload Recommendation</title>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.default.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-    
   </head>
 
   <body>
-
-    <main class="page-container">
+    <main class="form-page-container">
       <section class="recommendation-card">
+
         <div class="recommendation-card-header">
-          <h1 class="recommendation-card-title">Upload a book recommendatin</h1>
+          <h1 class="recommendation-card-title">Share a Book</h1>
           <p class="recommendation-card-subtitle">
-            Please enter your book recommendation details below
+            Enter your book recommendation details below.
           </p>
         </div>
 
         <form class="recommendation-form" action="/books" method="POST" enctype="multipart/form-data">
+
           <div class="form-group">
             <label class="form-label" for="bookTitle">Book Title</label>
             <input class="form-input" type="text" name="bookTitle" id="bookTitle" required />
           </div>
+
           <div class="form-group">
             <label class="form-label" for="bookAuthor">Book Author</label>
             <input class="form-input" type="text" name="bookAuthor" id="bookAuthor" required />
           </div>
 
           <div class="form-group">
-            <label for="image">Book Cover</label>
-            <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required />
+            <label class="form-label" for="image">Book Cover</label>
+            <input class="form-input" type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp"
+              required />
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="genre">Select Book Genres: <small>(use CTRL to select more than
-                one)</small></label>
-            <select name="genre" id="genre" multiple size="15">
+            <label class="form-label" for="genre">Select Book Genres</label>
+            <select name="genre" id="genre" multiple>
               <optgroup label="Fiction — General & Literary">
                 <option value="classic-literature">Classic Literature</option>
-                <option value="contemporary-fiction">
-                  Contemporary Fiction
-                </option>
+                <option value="contemporary-fiction">Contemporary Fiction</option>
                 <option value="historical-fiction">Historical Fiction</option>
                 <option value="humor-satire">Humor & Satire</option>
                 <option value="literary-fiction">Literary Fiction</option>
@@ -68,16 +68,12 @@
                 <option value="cozy-mystery">Cozy Mystery</option>
                 <option value="crime-detective">Crime & Detective</option>
                 <option value="legal-thriller">Legal Thriller</option>
-                <option value="psychological-thriller">
-                  Psychological Thriller
-                </option>
+                <option value="psychological-thriller">Psychological Thriller</option>
                 <option value="spy-espionage">Spy & Espionage</option>
               </optgroup>
 
               <optgroup label="Fiction — Romance">
-                <option value="contemporary-romance">
-                  Contemporary Romance
-                </option>
+                <option value="contemporary-romance">Contemporary Romance</option>
                 <option value="historical-romance">Historical Romance</option>
                 <option value="paranormal-romance">Paranormal Romance</option>
                 <option value="romantic-suspense">Romantic Suspense</option>
@@ -94,9 +90,7 @@
               </optgroup>
 
               <optgroup label="Non-Fiction — Biography & History">
-                <option value="autobiography-memoir">
-                  Autobiography & Memoir
-                </option>
+                <option value="autobiography-memoir">Autobiography & Memoir</option>
                 <option value="biography">Biography</option>
                 <option value="genealogy">Genealogy & Heritage</option>
                 <option value="history-military">Military History</option>
@@ -109,19 +103,13 @@
                 <option value="health-fitness">Health & Fitness</option>
                 <option value="parenting-family">Parenting & Family</option>
                 <option value="self-help">Self-Help & Personal Growth</option>
-                <option value="spirituality-religion">
-                  Spirituality & Religion
-                </option>
+                <option value="spirituality-religion">Spirituality & Religion</option>
                 <option value="travel">Travel & Adventure</option>
               </optgroup>
 
               <optgroup label="Non-Fiction — Science, Tech & Business">
-                <option value="business-leadership">
-                  Business & Leadership
-                </option>
-                <option value="economics-finance">
-                  Economics & Personal Finance
-                </option>
+                <option value="business-leadership">Business & Leadership</option>
+                <option value="economics-finance">Economics & Personal Finance</option>
                 <option value="nature-environment">Nature & Environment</option>
                 <option value="psychology">Psychology</option>
                 <option value="science-technology">Science & Technology</option>
@@ -132,9 +120,7 @@
                 <option value="essays-journalism">Essays & Journalism</option>
                 <option value="philosophy">Philosophy</option>
                 <option value="poetry-drama">Poetry & Drama</option>
-                <option value="politics-government">
-                  Politics & Current Affairs
-                </option>
+                <option value="politics-government">Politics & Current Affairs</option>
                 <option value="true-crime">True Crime</option>
               </optgroup>
             </select>
@@ -142,18 +128,28 @@
 
           <div class="form-group">
             <label class="form-label" for="summary">Summary</label>
-            <textarea name="summary" id="summary" rows="4" required></textarea>
+            <textarea class="form-input" name="summary" id="summary" rows="4" required></textarea>
           </div>
 
           <div class="form-group">
             <label class="form-label" for="userThoughts">Your thoughts about the book</label>
-            <textarea name="userThoughts" id="userThoughts" rows="4" required></textarea>
+            <textarea class="form-input" name="userThoughts" id="userThoughts" rows="4" required></textarea>
           </div>
 
-          <button class="primary-button" type="submit">submit</button>
+          <button class="btn primary-btn" style="width: 100%; margin-top: 1rem;" type="submit">Submit Recommendation</button>
         </form>
       </section>
     </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        new TomSelect('#genre', {
+          plugins: ['remove_button'],
+          placeholder: "Search and select genres...",
+          maxItems: null
+        });
+      });
+    </script>
   </body>
 
   </html>
