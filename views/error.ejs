@@ -1,3 +1,4 @@
+<%- include("./partials/nav.ejs") %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +7,17 @@
     <title>Error</title>
 </head>
 <body>
-    <h1>
-        You encountered an error<br/>
-        <%= msg %>
-    </h1>
-    
-    <a href="/">Back to home</a>
+    <main class="error-page-container">
+        <div class="error-card">
+            <div class="error-icon">⚠️</div>
+            <h1 class="error-title">Something went wrong</h1>
+            
+            <div class="error-message">
+                <%= msg %>
+            </div>
+            
+            <a href="/" class="btn primary-btn">Back to Home</a>
+        </div>
+    </main>
 </body>
 </html>
