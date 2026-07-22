@@ -258,6 +258,20 @@ const uploadImage = (fileBuffer) => {
     uploadStream.end(fileBuffer);
   });
 };
+const addLike = async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.bookId, {
+    $push: { likedByUsers: req.params.userId },
+  });
+
+  res.redirect(`/books/${req.params.bookId}`);
+};
+const addislike = async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.bookId, {
+    $push: { dislikedByUsers: req.params.userId },
+  });
+
+  res.redirect(`/books/${req.params.bookId}`);
+};
 
 
 module.exports = {
