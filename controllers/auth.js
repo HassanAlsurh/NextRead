@@ -69,9 +69,7 @@ const signUp = async (req, res) => {
       });
     }
   } else if (req.body.password === req.body.confirmPassword) {
-    console.log(
-      `req.body.password: ${req.body.password}  +   req.body.confirmPassword: ${req.body.confirmPassword}`,
-    );
+
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -93,9 +91,6 @@ const signUp = async (req, res) => {
       res.redirect("/");
     });
   } else {
-    console.log(
-      `req.body.password: ${req.body.password}  +   req.body.confirmPassword: ${req.body.confirmPassword}`,
-    );
     res.render("error.ejs", {
       msg: "Password and confirm password are not the same",
       pageTitle: "Error",
@@ -245,7 +240,6 @@ const editUser = async (req, res) => {
 
     req.session.save(() => {
       res.redirect("/");
-      console.log("session saved");
     });
   } catch (error) {
     console.log(error);
@@ -256,9 +250,7 @@ const dashboard = async (req, res) => {
   const allUsers = await User.find();
   const allBooks = await Book.find();
   const allComments = await Comment.find();
-  console.log("++=================================++", allUsers);
-  console.log("++=================================++", allBooks);
-  console.log("++=================================++", allComments);
+
 
   res.render("dashboard.ejs", {
     allUsers,

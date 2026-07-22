@@ -8,7 +8,7 @@ const upload = require("../config/multer.js");
 const showAllBooks = async (req, res) => {
   const foundBooks = await Book.find({});
   const allUsers = await User.find();
-  console.log(foundBooks);
+
   res.render("books/index.ejs", {
     books: foundBooks,
     allUsers,
@@ -16,22 +16,22 @@ const showAllBooks = async (req, res) => {
   });
 };
 const showBook = async (req, res) => {
-  console.log("book Id:  >>>", req.params.bookId);
 
+  
   const currentBook = await Book.findById(req.params.bookId);
   const poserDetails = await User.findById(currentBook.userId);
   const postComments = await Comment.find({
     bookId: req.params.bookId,
   }).populate("userId");
 
-  const dislikedByUser = false;
-  const likedByUser = false;
+  let dislikedByUser = false;
+  let likedByUser = false;
 
   if (req.session.user) {
-    const likedByUser = await currentBook.likedByUsers.some((user) => {
+     likedByUser = await currentBook.likedByUsers.some((user) => {
       return user.equals(req.session.user.id);
     });
-    const dislikedByUser = await currentBook.dislikedByUsers.some((user) => {
+     dislikedByUser = await currentBook.dislikedByUsers.some((user) => {
       return user.equals(req.session.user.id);
     });
   }
@@ -142,8 +142,8 @@ const editBook = async (req, res) => {
         pageTitle: "Error",
       });
     }
-    console.log("book owner id:>>>>>>>>>>>>>>>>>>", foundBook.userId);
-    console.log("session id:>>>>>>>>>>>>>>>>>>", req.session.user.id);
+
+    
 
     if (!foundBook.userId.equals(req.session.user.id)) {
       return res.render("error.ejs", {
@@ -245,7 +245,6 @@ const deleteBook = async (req, res) => {
       });
     }
 
-    console.log("Current user is: >>>>>>>>>>>>>>>>>>>", currentUser);
 
     if (currentUser.role !== "admin") {
       if (!bookToDelete.userId.equals(req.session.user.id)) {

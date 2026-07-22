@@ -63,7 +63,6 @@ const editComment = async (req, res) => {
 
 const deleteComment = async (req, res) => {
   try {
-    console.log(req.params.commentId);
 
     const commentToDelete = await Comment.findByIdAndDelete(
       req.params.commentId,
