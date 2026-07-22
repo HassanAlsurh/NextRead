@@ -1,198 +1,1241 @@
-﻿* {
-    box-sizing: border-box;
+﻿/* BASE RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    color: rgb(31, 41, 55);
-    background-color: rgb(243, 244, 246);
+/* NAVBAR CONTAINER */
+.navbar {
+display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #eaeaea;
 }
 
-main h1,p {
-    text-align: center;
+/* DESKTOP LAYOUT (Default) */
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.site-nav {
-    padding: 10px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    background-color: white;
-    border-bottom: 1px solid rgb(229, 231, 235);
+.nav-brand {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #111;
 }
 
-.site-nav-brand {
-    color: rgb(17, 24, 39);
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-decoration: none;
+.hamburger {
+  display: none; /* Hidden on desktop */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
 }
 
-.site-nav-links {
-    display: flex;
-    align-items: center;
-    gap: 18px;
+.hamburger .bar {
+  display: block;
+  width: 25px;
+  height: 3px;
+  margin: 4px auto;
+  background-color: #111;
+  transition: all 0.3s ease;
 }
 
-.site-nav-link,
-.site-nav-button {
-    color: rgb(55, 65, 81);
-    font: inherit;
-    font-weight: 600;
-    text-decoration: none;
+/* MENU LAYOUT */
+.nav-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1; /* Pushes auth to the right */
+  margin-left: 2rem;
 }
 
-.site-nav-link:hover,
-.site-nav-button:hover {
-    color: rgb(17, 24, 39);
+.nav-main-links, .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.site-nav-form {
-    margin: 0;
+.nav-link {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.site-nav-button {
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
+.nav-link:hover {
+  color: #000;
 }
 
-.page-container {
-    padding: 40px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* BUTTONS & FORMS */
+.signout-form {
+  margin: 0;
 }
 
-.auth-card {
+.nav-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #555;
+  cursor: pointer;
+}
+
+.nav-btn:hover {
+  color: #000;
+}
+
+.nav-btn.primary {
+  background-color: #111;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.nav-btn.primary:hover {
+  background-color: #333;
+}
+
+/* PROFILE PICTURE */
+.nav-pfp img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================================
+   MOBILE RESPONSIVE (600px and below)
+   ========================================= */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 1rem;
+    display: block; /* Ensure it stacks cleanly */
+  }
+
+  .nav-header {
     width: 100%;
-    max-width: 440px;
-    padding: 32px;
-    background-color: white;
-    border: 1px solid rgb(229, 231, 235);
-    border-radius: 10px;
-}
+  }
 
-.auth-card-header {
-    margin-bottom: 26px;
-    text-align: center;
-}
+  .hamburger {
+    display: block; /* Show the button */
+  }
 
-.auth-card-title {
-    margin: 0 0 8px;
-    color: rgb(17, 24, 39);
-    font-size: 2rem;
-}
-
-.auth-card-subtitle {
-    margin: 0;
-    color: rgb(107, 114, 128);
-    line-height: 1.5;
-}
-
-.auth-form {
-    display: flex;
+  /* Hide the menu by default on mobile */
+  .nav-menu {
+    display: none; 
     flex-direction: column;
-    gap: 20px;
+    margin-left: 0;
+    margin-top: 1rem;
+    gap: 1rem;
+    align-items: stretch; /* Stretch links to full width */
+  }
+
+  /* When JS adds the .active class, show the menu */
+  .nav-menu.active {
+    display: flex;
+  }
+
+  .nav-main-links, .nav-right {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .nav-right {
+    border-top: 1px solid #eaeaea;
+    padding-top: 1rem;
+  }
+}
+
+
+/* =========================================
+   HOME PAGE (HERO SECTION)
+   ========================================= */
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Subtracts an estimated navbar height so it centers perfectly on the screen */
+  min-height: calc(100vh - 80px); 
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero {
+  max-width: 600px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #555;
+  margin-bottom: 2.5rem;
+  line-height: 1.5;
+}
+
+/* Button Layout */
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.primary-btn {
+  background-color: #111;
+  color: #fff;
+  border: 2px solid #111;
+}
+
+.primary-btn:hover {
+  background-color: #333;
+  border-color: #333;
+}
+
+.secondary-btn {
+  background-color: transparent;
+  color: #111;
+  border: 2px solid #111;
+}
+
+.secondary-btn:hover {
+  background-color: #f5f5f5;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .hero-title {
+    font-size: 2.25rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%; /* Buttons take full width on phones */
+  }
+}
+
+
+/* =========================================
+   BROWSE PAGE & GRID (INDEX)
+   ========================================= */
+.browse-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.browse-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.browse-header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+}
+
+.browse-grid {
+  display: grid;
+  /* Automatically fits as many 320px cards as possible per row */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* =========================================
+   BOOK CARDS
+   ========================================= */
+.book-card {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+  height: 100%;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* User / Poster Header */
+.poster-details {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #eaeaea;
+  background: #fafafa;
+}
+
+.poster-pfp {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.poster-username {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Entire card below the user row is a clickable flex column */
+.book-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Book Cover - Fully visible (contained) with a subtle shadow */
+.book-cover-wrapper {
+  width: 100%;
+  height: 280px; 
+  background: #f9fafb; /* Very light gray frame to pad the image */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem; 
+  border-bottom: 1px solid #eaeaea;
+}
+
+.book-cover {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Shows 100% of the image without stretching */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Drop shadow on the book itself */
+  border-radius: 2px;
+}
+
+/* Content Area */
+.book-info {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Forces this container to take up remaining height */
+}
+
+.book-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+  color: #111;
+  line-height: 1.2;
+}
+
+.book-author {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 1.25rem;
+}
+
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.genre-pill {
+  background: #f3f4f6;
+  color: #4b5563;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.book-summary {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  
+  /* Forces text to exactly 3 lines and adds "..." */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Card Footer / Timestamps */
+.meta-info {
+  margin-top: auto; /* Pushes this div to the absolute bottom of .book-info */
+  padding-top: 1rem;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.edited-badge {
+  font-style: italic;
+}
+
+
+/* =========================================
+   FORMS & AUTH CARDS
+   ========================================= */
+.form-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  min-height: calc(100vh - 80px); /* Accounts for navbar */
+}
+
+.recommendation-card {
+  width: 100%;
+  max-width: 600px;
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.recommendation-card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.recommendation-card-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+
+.recommendation-card-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* FORM ELEMENTS */
+.recommendation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .form-label {
-    color: rgb(55, 65, 81);
-    font-size: 0.95rem;
-    font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
 }
 
 .form-input {
-    width: 100%;
-    padding: 12px 14px;
-    color: rgb(17, 24, 39);
-    font: inherit;
-    background-color: white;
-    border: 1px solid rgb(209, 213, 219);
-    border-radius: 8px;
-    outline: none;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #111;
+  background-color: #fafafa;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  outline: none;
 }
 
 .form-input:focus {
-    border-color: rgb(79, 70, 229);
+  border-color: #111;
+  background-color: #fff;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.1);
 }
 
-.primary-button {
+/* Textarea specific */
+textarea.form-input {
+  resize: vertical; /* Allows users to drag the box taller, but not wider */
+  min-height: 100px;
+}
+
+/* File Input specific */
+input[type="file"].form-input {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+/* Tom Select Styling Overrides (To match your form-input) */
+.ts-control {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #fafafa;
+  font-family: inherit;
+}
+.ts-control.focus {
+  border-color: #111;
+  background-color: #fff;
+  box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.1);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .recommendation-card {
+    padding: 1.5rem;
+  }
+}
+
+/* =========================================
+   TOM SELECT DROPDOWN FIX
+   ========================================= */
+.ts-dropdown, 
+.ts-control, 
+.ts-wrapper.single .ts-control {
+  background-color: #ffffff !important;
+}
+
+.ts-dropdown {
+  border: 1px solid #d1d5db !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  z-index: 9999 !important; /* Forces it to the very front */
+}
+
+.ts-dropdown .option {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.ts-dropdown .option:hover,
+.ts-dropdown .active {
+  background-color: #f3f4f6 !important;
+  color: #111 !important;
+}
+
+.ts-dropdown .optgroup-header {
+  font-weight: 700;
+  color: #555;
+  background-color: #fafafa;
+  padding: 8px 12px;
+}
+/* =========================================
+   EDIT FORM EXTRAS
+   ========================================= */
+.current-cover-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.current-cover-preview img {
+  width: 120px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  object-fit: cover;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+
+
+
+
+
+
+/* =========================================
+   SHOW PAGE (SINGLE BOOK VIEW)
+   ========================================= */
+.show-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* BOOK DETAIL CARD */
+.book-detail-card {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  margin-bottom: 3rem;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  background-color: #fafafa;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.owner-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.detail-body {
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+.detail-cover-wrapper {
+  flex-shrink: 0;
+  width: 250px;
+}
+
+.detail-cover {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  object-fit: cover;
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.detail-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 0.25rem;
+}
+
+.detail-author {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.content-section {
+  margin-bottom: 1.5rem;
+}
+
+.content-section h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.content-section p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #444;
+}
+
+/* INTERACTIONS (LIKE / DISLIKE) */
+.interactions-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eaeaea;
+}
+
+.interaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #fafafa;
+  border: 1px solid #d1d5db;
+  border-radius: 99px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.interaction-btn:hover {
+  background: #f3f4f6;
+}
+
+.active-like {
+  background: #eef2ff;
+  border-color: #6366f1;
+  color: #4f46e5;
+}
+
+.active-dislike {
+  background: #fef2f2;
+  border-color: #ef4444;
+  color: #dc2626;
+}
+
+/* COMMENTS SECTION */
+.comments-section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid #eaeaea;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #111;
+  display: inline-block;
+}
+
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.align-self-end {
+  align-self: flex-end;
+}
+
+.single-comment {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.single-comment:last-child {
+  border-bottom: none;
+}
+
+.commenter-pfp {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.comment-body {
+  flex-grow: 1;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.comment-date {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.comment-text {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 0.75rem;
+}
+
+.comment-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-link {
+  background: none;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  padding: 0;
+}
+
+.action-link:hover {
+  text-decoration: underline;
+}
+
+.danger-text {
+  color: #ef4444;
+}
+
+/* POPOVER MODAL STYLING */
+.edit-popover {
+  margin: auto; /* Centers the popover */
+  padding: 1.5rem;
+  border: none;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  width: 90%;
+  max-width: 500px;
+}
+
+/* Dim the background when popover is open */
+.edit-popover::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.popover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.popover-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+/* Extra utility buttons used in header */
+.small-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.secondary-btn {
+  background: #fff;
+  color: #111;
+  border: 1px solid #d1d5db;
+}
+
+.secondary-btn:hover {
+  background: #f3f4f6;
+}
+
+.danger-btn {
+  background: #ef4444;
+  color: #fff;
+  border: 1px solid #ef4444;
+}
+
+.danger-btn:hover {
+  background: #dc2626;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .detail-body {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  
+  .detail-cover-wrapper {
     width: 100%;
-    padding: 12px 16px;
-    color: white;
-    font: inherit;
-    font-weight: 700;
-    background-color: rgb(79, 70, 229);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }
 
-.primary-button:hover {
-    background-color: rgb(67, 56, 202);
+/* =========================================
+   ERROR PAGE
+   ========================================= */
+.error-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  min-height: calc(100vh - 80px); /* Accounts for the navbar */
+}
+
+.error-card {
+  background: #ffffff;
+  border: 1px solid #fecaca; /* Light red border */
+  border-radius: 12px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  max-width: 450px;
+  width: 100%;
+  box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.1); /* Subtle red shadow */
+}
+
+.error-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.error-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #dc2626; /* Darker red text */
+  background: #fef2f2; /* Very light red background */
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  word-wrap: break-word;
+}
+
+/* Button override to ensure link behaves like a block element */
+.error-card .btn {
+  text-decoration: none;
+  display: inline-block;
+  width: 100%;
+}
+
+
+
+/* =========================================
+   AUTHENTICATION CARDS
+   ========================================= */
+.auth-card {
+  width: 100%;
+  max-width: 420px; /* Narrower than the upload card for a tighter look */
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.auth-card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-card-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 0.5rem;
+}
+
+.auth-card-subtitle {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .auth-card-footer {
-    margin: 22px 0 0;
-    color: rgb(107, 114, 128);
-    text-align: center;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .text-link {
-    color: rgb(79, 70, 229);
-    font-weight: 700;
-    text-decoration: none;
+  color: #111;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .text-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+  color: #333;
 }
 
-@media (max-width: 600px) {
-    .site-nav {
-        padding: 16px 18px;
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 14px;
-    }
-
-    .site-nav-links {
-        width: 100%;
-        flex-wrap: wrap;
-        gap: 14px;
-    }
-
-    .page-container {
-        padding: 28px 16px;
-    }
-
-    .auth-card {
-        padding: 24px 20px;
-    }
+/* =========================================
+   PROFILE EDIT PREVIEW
+   ========================================= */
+.profile-edit-preview {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
-.pfp > img {
-    width: 40px;
-    height: 40px;
-    border-radius: 100px;
-    padding: 0;
-    margin: 0;
+.profile-edit-preview img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #f3f4f6;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
-.Edit-Profile-PFP > img {
-    width: 150px;
-    height: 150px;
-    border-radius: 100px;
-    padding: 0;
-    margin: 0;
+
+
+/* =========================================
+   DASHBOARD / ADMIN PANEL
+   ========================================= */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eaeaea;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 0.25rem;
+}
+
+.dashboard-subtitle {
+  color: #666;
+  font-size: 1rem;
+}
+
+/* STATS GRID */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  background: #f3f4f6;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: #666;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111;
+  line-height: 1.1;
+}
+
+/* ADMIN TABLES */
+.admin-section {
+  background: #ffffff;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  padding: 1rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+  border-bottom: 2px solid #eaeaea;
+}
+
+.admin-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #eaeaea;
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.table-user-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.table-pfp {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.font-semibold { font-weight: 600; }
+.text-gray { color: #666; }
+.text-sm { font-size: 0.85rem; }
+.text-right { text-align: right; }
+
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.active-badge {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+/* Add to style.css */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+
+/* =========================================
+   CUSTOM ACTION POPOVERS (Modals)
+   ========================================= */
+.action-popover {
+  margin: auto; /* Centers the native popover on the screen */
+  padding: 1.5rem;
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 400px;
+}
+
+/* Blurs and darkens the background when open */
+.action-popover::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(2px);
+}
+
+.action-popover .popover-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.action-popover .popover-body {
+  margin-bottom: 1.5rem;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.action-popover .popover-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #9ca3af;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: #111;
+}
+
+.danger-text {
+  color: #dc2626; /* Matches your danger-btn aesthetic */
 }
