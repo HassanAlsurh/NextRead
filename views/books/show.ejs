@@ -1,87 +1,121 @@
 <%- include("../partials/nav.ejs") %>
 
-    <div class="books-listing-container">
-<div class="poster-details">
-  <div class="user-PFP"><img src="<%= poster.profilePicture.url %>" alt=""></div>
-  <div class="poster-username">
-    <%= poster.username %>
+  <div class="books-listing-container">
+    <div class="poster-details">
+      <div class="user-PFP"><img src="<%= poster.profilePicture.url %>" alt=""></div>
+      <div class="poster-username">
+        <%= poster.username %>
+      </div>
+    </div>
+
+
+    <% if (book.userId._id.equals(user.id)) { %>
+      <div class="owner-controlls-container">
+        <form action="/books/<%= book._id %>/?_method=DELETE" method="post">
+          <button type="submit">Delete Post</button>
+        </form>
+        <div class="edit-listing">
+          <a href="/books/<%= book._id %>/edit">Edit Post</a>
+        </div>
+      </div>
+      <% } %>
+
+
+        <div class="a-book-container">
+          <img src="<%= book.bookCover.url %>" alt="<%= book.bookTitle %> book cover">
+          <%= book.bookTitle %>
+            <%= book.bookAuthor %>
+              <div class="genres">
+                <% book.genre.forEach((genre)=> { %>
+                  <div class="a-genre-pill">
+                    <%= genre %>
+                  </div>
+                  <% }) %>
+              </div>
+              <div class="summary-container">
+                <%= book.summary %>
+              </div>
+              <div class="user-thoughts-container">
+                <%= book.userThoughts %>
+              </div>
+
+              <div class="meta-info">
+                <span>
+                  <%= book.createdAt.toLocaleDateString() %>
+                </span>
+
+                <% if (book.createdAt.getTime() !==book.updatedAt.getTime()) { %>
+                  <span class="edited-badge">(Edited)</span>
+                  <% } %>
+              </div>
+        </div>
+
+        <div class="interactions-container">
+          <!-- likes an ddislikes -->
+        </div>
+
   </div>
-</div>
 
-
-      <% if (book.userId._id.equals(user.id)) { %>
-  <div class="owner-controlls-container">
-    <form action="/books/<%= book._id %>/?_method=DELETE" method="post">
-      <button type="submit">Delete Post</button>
-    </form>
-    <div class="edit-listing">
-      <a href="/books/<%= book._id %>/edit">Edit Post</a>
-    </div>
-  </div>      
-  <% } %>
-
-
-      <div class="a-book-container">
-        <img src="<%= book.bookCover.url %>" alt="<%= book.bookTitle %> book cover">
-        <%= book.bookTitle %>
-        <%= book.bookAuthor %>
-        <div class="genres">
-          <% book.genre.forEach((genre) => { %>
-          <div class="a-genre-pill">
-            <%= genre %>
-          </div>
-          <% }) %>
-        </div>
-        <div class="summary-container">
-          <%= book.summary %>
-        </div>
-        <div class="user-thoughts-container">
-          <%= book.userThoughts %>
-        </div>
-
-        <div class="meta-info">
-          <span><%= book.createdAt.toLocaleDateString() %></span> 
-
-          <% if (book.createdAt.getTime() !== book.updatedAt.getTime()) { %>
-          <span class="edited-badge">(Edited)</span>
-          <% } %>
-        </div>
-      </div>
-
-      <div class="interactions-container">
-        <!-- likes an ddislikes -->
-      </div>
-
-    </div>
-
-    <div class="comment-section-container">
-      <h2>Commments Section</h2>
-      <div class="add-a-comment">
-    <form action="/books/<%= book._id %>/comments" method="post">
-      <center><textarea name="commentContent" rows="4"  style="width: 80%; " placeholder="Write a comment..."></textarea></center><br/>
+  <div class="comment-section-container">
+    <h2>Commments Section</h2>
+    <div class="add-a-comment">
+      <form action="/books/<%= book._id %>/comments" method="post">
+        <center><textarea name="commentContent" rows="4" style="width: 80%; "
+            placeholder="Write a comment..."></textarea></center><br />
         <button type="submit">Send</button>
-    </form>
-      </div>
-      <div class="comments-container">
-        <% comments.forEach((item) => { %>
-          <div class="single-comment-container">
-            <div class="commenter-PFP"><img src="<%= item.userId.profilePicture.url %>" alt="Profile picture of user <%= item.userId.username %>"></div>
-            <div class="commenter-username"><%= item.userId.username %> </div>
-            <div class="comment-content"><%= item.comment %></div>
-            <% if (item.userId._id.equals(user.id)) { %>
-               <div class="commenter-controlls-container">
-    <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=DELETE" method="post">
-      <button type="submit">🗑️</button>
-    </form>
-    <div class="edit-comment">
-        <!-- a button to show a popup form to update the comment -->
+      </form>
     </div>
-  </div>  
-            <% } %>
-             
+    <div class="comments-container">
+      <% comments.forEach((item)=> { %>
+        <div class="single-comment-container">
+          <div class="commenter-PFP"><img src="<%= item.userId.profilePicture.url %>"
+              alt="Profile picture of user <%= item.userId.username %>"></div>
+          <div class="commenter-username">
+            <%= item.userId.username %>
           </div>
+          <div class="comment-content">
+            <%= item.comment %>
+          </div>
+          <div class="comment-meta-info">
+            <%= item.createdAt.toLocaleDateString() %>
+            <% if (item.createdAt.getTime() !== item.updatedAt.getTime()) { %>
+             <small>Edited</small>
+            <% } %>
+          </div>
+
+          <% if (item.userId._id.equals(user.id)) { %>
+            <div class="commenter-controlls-container">
+              <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=DELETE" method="post">
+                <button type="submit">🗑️</button>
+              </form>
+              <div class="edit-comment">
+                <button type="button" popovertarget="edit-modal-<%= item._id %>">✏️</button>
+              </div>
+
+              <div id="edit-modal-<%= item._id %>" popover class="edit-comment-popover">
+                <div class="modal-header">
+                  <h3>Edit Comment</h3>
+                  <button type="button" class="close-btn" popovertarget="edit-modal-<%= item._id %>"
+                    popovertargetaction="hide">&times;</button>
+                </div>
+
+                <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=PUT" method="POST">
+                  <textarea name="commentContent" rows="4" required><%= item.comment %></textarea>
+                  <div class="modal-actions">
+                    <button type="button" popovertarget="edit-modal-<%= item._id %>"
+                      popovertargetaction="hide">Cancel</button>
+                    <button type="submit" class="save-btn">Save Changes</button>
+                  </div>
+                </form>
+              </div>
+              
+            </div>
+            <% } %>
+        </div>
+
         <% }) %>
-      </div>
     </div>
+  </div>
   </body>
-</html>
+
+  </html>
