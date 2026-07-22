@@ -100,6 +100,7 @@ Open your browser and navigate to `http://localhost:3000`.
   * Analytics in dashboard
   * Users dashboard
   * History page for users
+  * Implement Wishlist 1: use API to show daily quotes
 
 ## Credits
 This project would've not been possible without the help and support of my instructor in GA, Ms. **Nabila** and the Instructor Associates, Ms. **Zainab** and Ms. **Bidoor**.
