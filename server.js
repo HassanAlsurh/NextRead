@@ -8,6 +8,7 @@ const booksCtrl = require("./controllers/books.js");
 const commentsCtrl = require("./controllers/comments.js");
 const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
+const passRoleToView = require("./middleware/pass-role-view.js");
 const methodOverride = require("method-override");
 const { MongoStore } = require("connect-mongo");
 
@@ -41,6 +42,7 @@ app.use(
 );
 
 app.use(passUserToView);
+app.use(passRoleToView);
 
 app.get("/", authCtrl.home);
 // Auth
@@ -64,23 +66,39 @@ app.get("/books/new", isSignedIn, booksCtrl.showNewBook); //done
 app.get("/books/:bookId", booksCtrl.showBook); //done
 app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook); //done
 app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook); //done
-app.put('/books/:bookId',isSignedIn, upload.single("image"), booksCtrl.editBook) 
-app.delete('/books/:bookId', isSignedIn, booksCtrl.deleteBook) 
+app.put(
+  "/books/:bookId",
+  isSignedIn,
+  upload.single("image"),
+  booksCtrl.editBook,
+);
+app.delete("/books/:bookId", isSignedIn, booksCtrl.deleteBook);
 // Interactions
-app.put('/books/:bookId/like/:userId', isSignedIn, booksCtrl.addLike)
-app.put('/books/:bookId/dislike/:userId', isSignedIn, booksCtrl.addislike)
-app.delete('/books/:bookId/like/:userId', isSignedIn, booksCtrl.removelike)
-app.delete('/books/:bookId/dislike/:userId', isSignedIn, booksCtrl.removeDislike)
+app.put("/books/:bookId/like/:userId", isSignedIn, booksCtrl.addLike);
+app.put("/books/:bookId/dislike/:userId", isSignedIn, booksCtrl.addislike);
+app.delete("/books/:bookId/like/:userId", isSignedIn, booksCtrl.removelike);
+app.delete(
+  "/books/:bookId/dislike/:userId",
+  isSignedIn,
+  booksCtrl.removeDislike,
+);
 // Comments
-app.post('/books/:bookId/comments', isSignedIn, commentsCtrl.newComment)
-app.put('/books/:bookId/comments/:commentId',  isSignedIn, commentsCtrl.editComment)
-app.delete('/books/:bookId/comments/:commentId',  isSignedIn, commentsCtrl.deleteComment)
-
+app.post("/books/:bookId/comments", isSignedIn, commentsCtrl.newComment);
+app.put(
+  "/books/:bookId/comments/:commentId",
+  isSignedIn,
+  commentsCtrl.editComment,
+);
+app.delete(
+  "/books/:bookId/comments/:commentId",
+  isSignedIn,
+  commentsCtrl.deleteComment,
+);
 
 // =====================================================
 app.get("/*splat", (req, res) => {
   res.render("error.ejs", {
-    msg: '404 Not Found',
+    msg: "404 Not Found",
   });
 });
 // =====================================================
