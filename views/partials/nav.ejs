@@ -9,40 +9,59 @@
 </head>
 
 <body>
-    <nav class="site-nav">
-        <a class="site-nav-brand" href="/">NextRead</a>
-        <div class="site-nav-links">
 
-        <div class="site-pages">
-            <a class="site-nav-link" href="/">Home</a>
-            <a class="site-nav-link" href="/books">Browse</a>
-
+    <nav class="navbar">
+        <div class="nav-header">
+            <a href="/" class="nav-brand">NextRead</a>
+            <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
 
-            <div class="authentication-related">
-                <% if (user) { %>
-                    <% if (admin) { %>
-                    <a class="site-nav-link" href="/dashboard">Dashboard</a>
-                        <% } %>
-
-                    <form class="site-nav-form" action="/auth/sign-out?_method=DELETE" method="POST">
-                        <button class="site-nav-button" type="submit">
-                            Sign Out
-                        </button>
-                    </form>
-                    <div class="pfp">
-                        <% if (user.image) { %>
-                            <img src="<%= user.image %>" alt="User's profile picture">
-                            <% } else { %>
-                                <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg"
-                                    alt="Default profile picture">
-                                <% } %>
-                    </div>
-                    <% } else { %>
-                        <a class="site-nav-link" href="/auth/sign-up">Sign Up</a>
-                        <a class="site-nav-link" href="/auth/sign-in">Sign In</a>
-                        <% } %>
+        <div class="nav-menu" id="navMenu">
+            <div class="nav-main-links">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/books" class="nav-link">Browse</a>
             </div>
 
+            <div class="nav-right">
+                <% if (user) { %>
+
+                    <% if (admin) { %>
+                        <a href="/dashboard" class="nav-link">Dashboard</a>
+                        <% } %>
+
+                            <form action="/auth/sign-out?_method=DELETE" method="POST" class="signout-form">
+                                <button type="submit" class="nav-btn">Sign Out</button>
+                            </form>
+
+                            <div class="nav-pfp">
+                                <% if (user.image) { %>
+                                    <img src="<%= user.image %>" alt="User's Profile Picture">
+                                    <% } else { %>
+                                        <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg"
+                                            alt="Default Profile Picture">
+                                        <% } %>
+                            </div>
+
+                            <% } else { %>
+                                <a href="/auth/sign-in" class="nav-link">Sign In</a>
+                                <a href="/auth/sign-up" class="nav-btn primary">Sign Up</a>
+                                <% } %>
+            </div>
         </div>
     </nav>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const navMenu = document.getElementById('navMenu');
+
+            hamburgerBtn.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>

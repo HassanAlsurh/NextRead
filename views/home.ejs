@@ -1,18 +1,22 @@
 ﻿<%- include("./partials/nav.ejs") %>
 
-<main>
-    <h1>NextRead</h1>
+    <main class="home-container">
+        <section class="hero">
+            <h1 class="hero-title">Discover Your Next Great Read.</h1>
+            <p class="hero-subtitle">Join a community of book lovers sharing, reviewing, and discovering their favorite
+                stories.</p>
 
-    <% if (user) { %>
-        <p>Welcome, <%= user.username %>.</p>
-    <% } else { %>
-        <p>Nothing here yet</p>
-    <% } %>
+            <div class="hero-actions">
+                <% if (user) { %>
+                    <a href="/books" class="btn primary-btn">Browse Recommendations</a>
+                    <% } else { %>
+                        <a href="/auth/sign-in" class="btn primary-btn">Sign In</a>
+                        <a href="/auth/sign-up" class="btn secondary-btn">Create an Account</a>
+                        <% } %>
+            </div>
+        </section>
+    </main>
 
-    <% if (user) { %>
-        <a href="/auth/<%= user.id %>">auth edit page</a>
-        <% } %>
-        <a href="/books/new">new book page</a>
-</main>
-</body>
-</html>
+    </body>
+
+    </html>

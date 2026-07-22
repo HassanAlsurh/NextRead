@@ -1,13 +1,16 @@
 <%- include("../partials/nav.ejs") %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
+    
+  </head>
+
+  <body>
 
     <main class="page-container">
       <section class="recommendation-card">
@@ -21,38 +24,21 @@
         <form class="recommendation-form" action="/books" method="POST" enctype="multipart/form-data">
           <div class="form-group">
             <label class="form-label" for="bookTitle">Book Title</label>
-            <input
-              class="form-input"
-              type="text"
-              name="bookTitle"
-              id="bookTitle"
-              required
-            />
+            <input class="form-input" type="text" name="bookTitle" id="bookTitle" required />
           </div>
           <div class="form-group">
             <label class="form-label" for="bookAuthor">Book Author</label>
-            <input
-              class="form-input"
-              type="text"
-              name="bookAuthor"
-              id="bookAuthor"
-              required
-            />
+            <input class="form-input" type="text" name="bookAuthor" id="bookAuthor" required />
           </div>
 
           <div class="form-group">
             <label for="image">Book Cover</label>
-            <input
-              type="file"
-              name="image"
-              id="image"
-              accept="image/jpeg,image/png,image/webp"
-              required
-            />
+            <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" required />
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="genre">Select Book Genres: <small>(use CTRL to select more than one)</small></label>
+            <label class="form-label" for="genre">Select Book Genres: <small>(use CTRL to select more than
+                one)</small></label>
             <select name="genre" id="genre" multiple size="15">
               <optgroup label="Fiction — General & Literary">
                 <option value="classic-literature">Classic Literature</option>
@@ -98,7 +84,7 @@
               </optgroup>
 
               <optgroup label="Fiction — Youth & Illustrated">
-                <option value="childrens">Children’s Books</option>
+                <option value="childrens">Children's Books</option>
                 <option value="comic-book">Comic Books</option>
                 <option value="graphic-novel">Graphic Novels</option>
                 <option value="manga">Manga</option>
@@ -160,15 +146,8 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="userThoughts"
-              >Your thoughts about the book</label
-            >
-            <textarea
-              name="userThoughts"
-              id="userThoughts"
-              rows="4"
-              required
-            ></textarea>
+            <label class="form-label" for="userThoughts">Your thoughts about the book</label>
+            <textarea name="userThoughts" id="userThoughts" rows="4" required></textarea>
           </div>
 
           <button class="primary-button" type="submit">submit</button>
@@ -176,4 +155,5 @@
       </section>
     </main>
   </body>
-</html>
+
+  </html>
