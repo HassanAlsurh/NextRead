@@ -5,46 +5,51 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.bootstrap5.min.css"
+        <title>Edit Recommendation</title>
+        <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.default.min.css"
             rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     </head>
 
     <body>
-        <main class="page-container">
+        <main class="form-page-container">
             <section class="recommendation-card">
                 <div class="recommendation-card-header">
-                    <h1 class="recommendation-card-title">Upload a book recommendatin</h1>
+                    <h1 class="recommendation-card-title">Edit Recommendation</h1>
                     <p class="recommendation-card-subtitle">
-                        Please enter your book recommendation details below
+                        Update the details of your book recommendation below.
                     </p>
                 </div>
 
                 <form class="recommendation-form" action="/books/<%= book._id %>?_method=PUT" method="POST"
                     enctype="multipart/form-data">
+
                     <div class="form-group">
                         <label class="form-label" for="bookTitle">Book Title</label>
                         <input class="form-input" type="text" name="bookTitle" id="bookTitle" required
                             value="<%= book.bookTitle %>" />
                     </div>
+
                     <div class="form-group">
                         <label class="form-label" for="bookAuthor">Book Author</label>
                         <input class="form-input" type="text" name="bookAuthor" id="bookAuthor" required
                             value="<%= book.bookAuthor %>" />
                     </div>
 
-                    <div class="book-cover-image-container">
-                        <img src='<%= book.bookCover.url %>' alt="">
+                    <div class="current-cover-preview">
+                        <span class="form-label">Current Cover</span>
+                        <img src="<%= book.bookCover.url %>" alt="Current cover of <%= book.bookTitle %>">
                     </div>
 
                     <div class="form-group">
-                        <label for="image">Change Book Cover</label>
-                        <input type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp" />
+                        <label class="form-label" for="image">Upload New Cover (Optional)</label>
+                        <input class="form-input" type="file" name="image" id="image"
+                            accept="image/jpeg,image/png,image/webp" />
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label" for="genre">Select Book Genres: <small>(use CTRL to select more than one)</small> </label>
-                        <select name="genre" id="genre" multiple size="15">
+                        <label class="form-label" for="genre">Select Book Genres</label>
+                        <select name="genre" id="genre" multiple>
                             <optgroup label="Fiction — General & Literary">
                                 <option value="classic-literature" <%=book.genre.includes('classic-literature')
                                     ? 'selected' : '' %>>Classic Literature</option>
@@ -186,18 +191,31 @@
 
                     <div class="form-group">
                         <label class="form-label" for="summary">Summary</label>
-                        <textarea name="summary" id="summary" rows="4" required><%= book.summary %></textarea>
+                        <textarea class="form-input" name="summary" id="summary" rows="4"
+                            required><%= book.summary %></textarea>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label" for="userThoughts">Your thoughts about the book</label>
-                        <textarea name="userThoughts" id="userThoughts" rows="4" required><%= book.userThoughts %></textarea>
+                        <textarea class="form-input" name="userThoughts" id="userThoughts" rows="4"
+                            required><%= book.userThoughts %></textarea>
                     </div>
 
-                    <button class="primary-button" type="submit">submit</button>
+                    <button class="btn primary-btn" style="width: 100%; margin-top: 1rem;" type="submit">Save
+                        Changes</button>
                 </form>
             </section>
         </main>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                new TomSelect('#genre', {
+                    plugins: ['remove_button'],
+                    placeholder: "Search and select genres...",
+                    maxItems: null
+                });
+            });
+        </script>
     </body>
 
     </html>
