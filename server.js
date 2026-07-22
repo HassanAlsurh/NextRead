@@ -69,7 +69,8 @@ app.delete('/books/:bookId', isSignedIn, booksCtrl.deleteBook)
 // Interactions
 app.put('/books/:bookId/like/:userId', isSignedIn, booksCtrl.addLike)
 app.put('/books/:bookId/dislike/:userId', isSignedIn, booksCtrl.addislike)
-
+app.delete('/books/:bookId/like/:userId', isSignedIn, booksCtrl.removelike)
+app.delete('/books/:bookId/dislike/:userId', isSignedIn, booksCtrl.removeDislike)
 // Comments
 app.post('/books/:bookId/comments', isSignedIn, commentsCtrl.newComment)
 app.put('/books/:bookId/comments/:commentId',  isSignedIn, commentsCtrl.editComment)
