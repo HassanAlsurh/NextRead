@@ -272,7 +272,18 @@ const addislike = async (req, res) => {
 
   res.redirect(`/books/${req.params.bookId}`);
 };
-
+const removelike = async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.bookId, {
+    $pull: { likedByUsers: req.params.userId },
+  });
+  res.redirect(`/books/${req.params.bookId}`);
+};
+const removeDislike = async (req, res) => {
+  await Book.findByIdAndUpdate(req.params.bookId, {
+    $pull: { dislikedByUsers: req.params.userId },
+  });
+  res.redirect(`/books/${req.params.bookId}`);
+};
 
 module.exports = {
   showAllBooks,
