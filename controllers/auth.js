@@ -1,4 +1,6 @@
 ﻿const User = require("../models/user");
+const Book = require("../models/book");
+const Comment = require("../models/comment");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const cloudinary = require("../config/cloudinary.js");
@@ -223,9 +225,18 @@ const editUser = async (req, res) => {
   }
 };
 
-const dashboard = (req, res) => {
+const dashboard = async (req, res) => {
+  const allUsers = await User.find();
+  const allBooks = await Book.find();
+  const allComments = await Comment.find();
+  console.log('++=================================++',allUsers);
+  console.log('++=================================++',allBooks);
+  console.log('++=================================++',allComments);
+  
   res.render("dashboard.ejs", {
-    user: req.session.user,
+    allUsers,
+    allBooks,
+    allComments,
   });
 };
 

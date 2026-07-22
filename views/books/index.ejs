@@ -1,5 +1,20 @@
 <%- include("../partials/nav.ejs") %>
 
+    <% 
+    function timeAgo(dateString) { 
+    const date=new Date(dateString); 
+    const diffInSeconds=Math.round((date.getTime() - Date.now()) / 1000); 
+    const absSeconds=Math.abs(diffInSeconds); 
+    const rtf=new Intl.RelativeTimeFormat('en', { numeric: 'auto' }); 
+    if (absSeconds < 60) return rtf.format(diffInSeconds, 'second' ); 
+    if (absSeconds < 3600) return rtf.format(Math.round(diffInSeconds / 60), 'minute' ); 
+    if (absSeconds < 86400) return rtf.format(Math.round(diffInSeconds / 3600), 'hour' ); 
+    if (absSeconds < 2592000) return rtf.format(Math.round(diffInSeconds / 86400), 'day' ); 
+    if (absSeconds < 31536000) return rtf.format(Math.round(diffInSeconds / 2592000), 'month' ); 
+    return rtf.format(Math.round(diffInSeconds / 31536000), 'year' ); 
+    } 
+    %>
+
 <main class="browse-container">
   <div class="browse-header">
     <h1>Community Recommendations</h1>
@@ -43,7 +58,7 @@
             <p class="book-summary"><%= item.summary %></p>
             
             <div class="meta-info">
-              <span><%= item.createdAt.toLocaleDateString() %></span> 
+              <span><%= timeAgo(item.createdAt)  %></span> 
               <% if (item.createdAt.getTime() !== item.updatedAt.getTime()) { %>
                 <span class="edited-badge">(Edited)</span>
               <% } %>

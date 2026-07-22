@@ -1,8 +1,111 @@
 ﻿<%- include("./partials/nav.ejs") %>
 
-<main>
-    <h1>Welcome to the dashboard, <%= user.username %></h1>
-    <p>This page is only available to signed-in users.</p>
-</main>
-</body>
-</html>
+    <main class="dashboard-container">
+        <header class="dashboard-header">
+            <div>
+                <h1 class="dashboard-title">Admin Control Panel</h1>
+                <p class="dashboard-subtitle">Welcome back, <%= user.username %>. Here is an overview of your platform.
+                </p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-info">
+                    <span class="stat-title">Total Users</span>
+                    <span class="stat-value">
+                        <%= allUsers.length %>
+                    </span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-info">
+                    <span class="stat-title">Books Recommended</span>
+                    <span class="stat-value">
+                        <%= allBooks.length %>
+                    </span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div class="stat-info">
+                    <span class="stat-title">Total Comments</span>
+                    <span class="stat-value">
+                        <%= allComments.length %>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="admin-section">
+            <h2 class="section-title">Manage Community</h2>
+
+            <div class="table-responsive">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (allUsers.length> 0) { %>
+                            <% allUsers.forEach((currUser)=> { %>
+                                <tr>
+                                    <td>
+                                        <div class="table-user-cell">
+                                            <% if (currUser.profilePicture && currUser.profilePicture.url) { %>
+                                                <img src="<%= currUser.profilePicture.url %>"
+                                                    alt="<%= currUser.username %>" class="table-pfp">
+                                                <% } else { %>
+                                                    <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg"
+                                                        alt="Default" class="table-pfp">
+                                                    <% } %>
+                                                        <span class="font-semibold">
+                                                            <%= currUser.username %>
+                                                        </span>
+                                        </div>
+                                    </td>
+
+                                    <td class="text-gray">
+                                        <%= currUser.email %>
+                                    </td>
+
+                                    <td>
+                                        <% if (currUser.role==='admin' ) { %>
+                                            <span class="status-badge admin-badge">Admin</span>
+                                            <% } else { %>
+                                                <span class="status-badge user-badge">User</span>
+                                                <% } %>
+                                    </td>
+
+                                    <td class="text-right">
+                                        <form action="#" method="get"
+                                            style="display: inline;">
+                                            <button type="submit" class="btn danger-btn small-btn"
+                                                <%=currUser.role==='admin' ? 'disabled' : '' %> >Ban User</button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                                <% }) %>
+                                    <% } else { %>
+                                        <tr>
+                                            <td colspan="4" class="text-center text-gray" style="padding: 2rem;">No
+                                                users found.</td>
+                                        </tr>
+                                        <% } %>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    </body>
+
+    </html>
