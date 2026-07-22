@@ -1,51 +1,59 @@
 <%- include("../partials/nav.ejs") %>
 
+<main class="browse-container">
+  <div class="browse-header">
+    <h1>Community Recommendations</h1>
+    <% if (user) { %>
+      <a href="/books/new" class="btn primary-btn">Share a Book</a>
+    <% } %>
+  </div>
 
-</div>
-      <% books.forEach((item) => { %>
-            <div class="books-listing-container">
-      <div class="poster-details">
-        <% allUsers.forEach((currUser) => { %>
-         <% if (currUser._id.equals(item.userId)) { %>
+  <div class="browse-grid">
+    <% books.forEach((item) => { %>
+      <article class="book-card">
+        
+        <div class="poster-details">
+          <% allUsers.forEach((currUser) => { %>
+            <% if (currUser._id.equals(item.userId)) { %>
+              <% if (currUser.profilePicture && currUser.profilePicture.url) { %>
+                <img class="poster-pfp" src="<%= currUser.profilePicture.url %>" alt="Profile">
+              <% } else { %>
+                <img class="poster-pfp" src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg" alt="Default">
+              <% } %>
+              <span class="poster-username"><%= currUser.username %></span>
+            <% } %>
+          <% }) %>
+        </div>
+
+        <a href="/books/<%= item._id %>" class="book-card-link">
+          <div class="book-cover-wrapper">
+            <img class="book-cover" src="<%= item.bookCover.url %>" alt="<%= item.bookTitle %> cover">
+          </div>
           
-          <div class="user-PFP"><img src="<%= currUser.profilePicture.url %>" alt=""></div>
-          <div class="poster-username">
-            <%= currUser.username %>
+          <div class="book-info">
+            <h2 class="book-title"><%= item.bookTitle %></h2>
+            <h3 class="book-author">by <%= item.bookAuthor %></h3>
+            
+            <div class="genres">
+              <% item.genre.forEach((genre) => { %>
+                <span class="genre-pill"><%= genre.replace(/-/g, ' ') %></span>
+              <% }) %>
+            </div>
+            
+            <p class="book-summary"><%= item.summary %></p>
+            
+            <div class="meta-info">
+              <span><%= item.createdAt.toLocaleDateString() %></span> 
+              <% if (item.createdAt.getTime() !== item.updatedAt.getTime()) { %>
+                <span class="edited-badge">(Edited)</span>
+              <% } %>
+            </div>
           </div>
-          <% } %>
-          <% }) %>
-        <a href="/books/<%= item._id %>">
-  
-      <div class="a-book-container">
-        <img src="<%= item.bookCover.url %>" alt="<%= item.bookTitle %> book cover">
-        <%= item.bookTitle %>
-        <%= item.bookAuthor %>
-        <div class="genres">
-          <% item.genre.forEach((genre) => { %>
-          <div class="a-genre-pill">
-            <%= genre %>
-          </div>
-          <% }) %>
-        </div>
-        <div class="summary-container">
-          <%= item.summary %>
-        </div>
-        <div class="user-thoughts-container">
-          <%= item.userThoughts %>
-        </div>
+        </a>
 
-        <div class="meta-info">
-          <span><%= item.createdAt.toLocaleDateString() %></span> 
-
-          <% if (item.createdAt.getTime() !== item.updatedAt.getTime()) { %>
-          <span class="edited-badge">(Edited)</span>
-          <% } %>
-        </div>
-      </div>
-      <hr>
-      <hr>      
-    </a>
-      <% }) %>
-    </div>
-  </body>
+      </article>
+    <% }) %>
+  </div>
+</main>
+</body>
 </html>
