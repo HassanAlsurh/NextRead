@@ -47,6 +47,15 @@ const signUp = async (req, res) => {
     email: req.body.email,
   });
 
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+  if (!passwordRegex.test(req.body.password)) {
+    res.render("error.ejs", {
+      msg: "Password must be at least 8 characters long and include at least one letter and one number.",
+      pageTitle: "Error",
+    });
+  }
+
   if (userInDatabase || emailInDatabase) {
     if (userInDatabase) {
       return res.render("error.ejs", {

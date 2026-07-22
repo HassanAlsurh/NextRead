@@ -1,12 +1,10 @@
-﻿/* BASE RESET */
-* {
+﻿* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: sans-serif;
 }
 
-/* NAVBAR CONTAINER */
 .navbar {
 display: flex;
   align-items: center;
@@ -15,7 +13,6 @@ display: flex;
   border-bottom: 1px solid #eaeaea;
 }
 
-/* DESKTOP LAYOUT (Default) */
 .nav-header {
   display: flex;
   justify-content: space-between;
@@ -30,7 +27,7 @@ display: flex;
 }
 
 .hamburger {
-  display: none; /* Hidden on desktop */
+  display: none; 
   background: none;
   border: none;
   cursor: pointer;
@@ -46,12 +43,11 @@ display: flex;
   transition: all 0.3s ease;
 }
 
-/* MENU LAYOUT */
 .nav-menu {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-grow: 1; /* Pushes auth to the right */
+  flex-grow: 1; 
   margin-left: 2rem;
 }
 
@@ -72,7 +68,6 @@ display: flex;
   color: #000;
 }
 
-/* BUTTONS & FORMS */
 .signout-form {
   margin: 0;
 }
@@ -102,7 +97,6 @@ display: flex;
   background-color: #333;
 }
 
-/* PROFILE PICTURE */
 .nav-pfp img {
   width: 40px;
   height: 40px;
@@ -111,13 +105,10 @@ display: flex;
   display: block;
 }
 
-/* =========================================
-   MOBILE RESPONSIVE (600px and below)
-   ========================================= */
 @media (max-width: 600px) {
   .navbar {
     padding: 1rem;
-    display: block; /* Ensure it stacks cleanly */
+    display: block; 
   }
 
   .nav-header {
@@ -125,20 +116,18 @@ display: flex;
   }
 
   .hamburger {
-    display: block; /* Show the button */
+    display: block; 
   }
 
-  /* Hide the menu by default on mobile */
   .nav-menu {
     display: none; 
     flex-direction: column;
     margin-left: 0;
     margin-top: 1rem;
     gap: 1rem;
-    align-items: stretch; /* Stretch links to full width */
+    align-items: stretch; 
   }
 
-  /* When JS adds the .active class, show the menu */
   .nav-menu.active {
     display: flex;
   }
@@ -156,14 +145,10 @@ display: flex;
 }
 
 
-/* =========================================
-   HOME PAGE (HERO SECTION)
-   ========================================= */
 .home-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Subtracts an estimated navbar height so it centers perfectly on the screen */
   min-height: calc(100vh - 80px); 
   padding: 2rem;
   text-align: center;
@@ -188,7 +173,6 @@ display: flex;
   line-height: 1.5;
 }
 
-/* Button Layout */
 .hero-actions {
   display: flex;
   gap: 1rem;
@@ -227,7 +211,6 @@ display: flex;
   background-color: #f5f5f5;
 }
 
-/* Mobile Adjustments */
 @media (max-width: 600px) {
   .hero-title {
     font-size: 2.25rem;
@@ -243,14 +226,11 @@ display: flex;
   }
 
   .btn {
-    width: 100%; /* Buttons take full width on phones */
+    width: 100%; 
   }
 }
 
 
-/* =========================================
-   BROWSE PAGE & GRID (INDEX)
-   ========================================= */
 .browse-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -274,14 +254,10 @@ display: flex;
 
 .browse-grid {
   display: grid;
-  /* Automatically fits as many 320px cards as possible per row */
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
 }
 
-/* =========================================
-   BOOK CARDS
-   ========================================= */
 .book-card {
   background: #ffffff;
   border: 1px solid #eaeaea;
@@ -299,7 +275,6 @@ display: flex;
   box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* User / Poster Header */
 .poster-details {
   display: flex;
   align-items: center;
@@ -322,7 +297,6 @@ display: flex;
   color: #333;
 }
 
-/* Entire card below the user row is a clickable flex column */
 .book-card-link {
   text-decoration: none;
   color: inherit;
@@ -331,11 +305,10 @@ display: flex;
   flex-grow: 1;
 }
 
-/* Book Cover - Fully visible (contained) with a subtle shadow */
 .book-cover-wrapper {
   width: 100%;
   height: 280px; 
-  background: #f9fafb; /* Very light gray frame to pad the image */
+  background: #f9fafb; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -346,17 +319,16 @@ display: flex;
 .book-cover {
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain; /* Shows 100% of the image without stretching */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Drop shadow on the book itself */
+  object-fit: contain; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 2px;
 }
 
-/* Content Area */
 .book-info {
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  flex-grow: 1; /* Forces this container to take up remaining height */
+  flex-grow: 1; 
 }
 
 .book-title {
@@ -397,7 +369,6 @@ display: flex;
   line-height: 1.5;
   margin-bottom: 1.5rem;
   
-  /* Forces text to exactly 3 lines and adds "..." */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -405,9 +376,8 @@ display: flex;
   text-overflow: ellipsis;
 }
 
-/* Card Footer / Timestamps */
 .meta-info {
-  margin-top: auto; /* Pushes this div to the absolute bottom of .book-info */
+  margin-top: auto; 
   padding-top: 1rem;
   border-top: 1px solid #eaeaea;
   display: flex;
@@ -422,15 +392,12 @@ display: flex;
 }
 
 
-/* =========================================
-   FORMS & AUTH CARDS
-   ========================================= */
 .form-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem 1rem;
-  min-height: calc(100vh - 80px); /* Accounts for navbar */
+  min-height: calc(100vh - 80px); 
 }
 
 .recommendation-card {
@@ -460,7 +427,6 @@ display: flex;
   font-size: 0.95rem;
 }
 
-/* FORM ELEMENTS */
 .recommendation-form {
   display: flex;
   flex-direction: column;
@@ -498,19 +464,16 @@ display: flex;
   box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.1);
 }
 
-/* Textarea specific */
 textarea.form-input {
-  resize: vertical; /* Allows users to drag the box taller, but not wider */
+  resize: vertical; 
   min-height: 100px;
 }
 
-/* File Input specific */
 input[type="file"].form-input {
   padding: 0.5rem;
   cursor: pointer;
 }
 
-/* Tom Select Styling Overrides (To match your form-input) */
 .ts-control {
   padding: 0.75rem 1rem;
   border: 1px solid #d1d5db;
@@ -524,16 +487,12 @@ input[type="file"].form-input {
   box-shadow: 0 0 0 2px rgba(17, 17, 17, 0.1);
 }
 
-/* Mobile Adjustments */
 @media (max-width: 600px) {
   .recommendation-card {
     padding: 1.5rem;
   }
 }
 
-/* =========================================
-   TOM SELECT DROPDOWN FIX
-   ========================================= */
 .ts-dropdown, 
 .ts-control, 
 .ts-wrapper.single .ts-control {
@@ -544,7 +503,7 @@ input[type="file"].form-input {
   border: 1px solid #d1d5db !important;
   border-radius: 8px !important;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-  z-index: 9999 !important; /* Forces it to the very front */
+  z-index: 9999 !important; 
 }
 
 .ts-dropdown .option {
@@ -564,9 +523,7 @@ input[type="file"].form-input {
   background-color: #fafafa;
   padding: 8px 12px;
 }
-/* =========================================
-   EDIT FORM EXTRAS
-   ========================================= */
+
 .current-cover-preview {
   display: flex;
   flex-direction: column;
@@ -583,25 +540,12 @@ input[type="file"].form-input {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
-
-
-
-
-
-
-
-
-
-/* =========================================
-   SHOW PAGE (SINGLE BOOK VIEW)
-   ========================================= */
 .show-page-container {
   max-width: 900px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
 
-/* BOOK DETAIL CARD */
 .book-detail-card {
   background: #ffffff;
   border: 1px solid #eaeaea;
@@ -683,7 +627,6 @@ input[type="file"].form-input {
   color: #444;
 }
 
-/* INTERACTIONS (LIKE / DISLIKE) */
 .interactions-container {
   display: flex;
   gap: 1rem;
@@ -723,7 +666,6 @@ input[type="file"].form-input {
   color: #dc2626;
 }
 
-/* COMMENTS SECTION */
 .comments-section {
   background: #ffffff;
   border-radius: 12px;
@@ -814,9 +756,8 @@ input[type="file"].form-input {
   color: #ef4444;
 }
 
-/* POPOVER MODAL STYLING */
 .edit-popover {
-  margin: auto; /* Centers the popover */
+  margin: auto; 
   padding: 1.5rem;
   border: none;
   border-radius: 12px;
@@ -826,7 +767,6 @@ input[type="file"].form-input {
   max-width: 500px;
 }
 
-/* Dim the background when popover is open */
 .edit-popover::backdrop {
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(2px);
@@ -853,7 +793,6 @@ input[type="file"].form-input {
   gap: 1rem;
 }
 
-/* Extra utility buttons used in header */
 .small-btn {
   padding: 0.4rem 0.8rem;
   font-size: 0.85rem;
@@ -879,7 +818,6 @@ input[type="file"].form-input {
   background: #dc2626;
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .detail-body {
     flex-direction: column;
@@ -893,26 +831,23 @@ input[type="file"].form-input {
   }
 }
 
-/* =========================================
-   ERROR PAGE
-   ========================================= */
 .error-page-container {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 3rem 1rem;
-  min-height: calc(100vh - 80px); /* Accounts for the navbar */
+  min-height: calc(100vh - 80px); 
 }
 
 .error-card {
   background: #ffffff;
-  border: 1px solid #fecaca; /* Light red border */
+  border: 1px solid #fecaca; 
   border-radius: 12px;
   padding: 3rem 2.5rem;
   text-align: center;
   max-width: 450px;
   width: 100%;
-  box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.1); /* Subtle red shadow */
+  box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.1); 
 }
 
 .error-icon {
@@ -931,15 +866,14 @@ input[type="file"].form-input {
 .error-message {
   font-size: 1rem;
   font-weight: 500;
-  color: #dc2626; /* Darker red text */
-  background: #fef2f2; /* Very light red background */
+  color: #dc2626; 
+  background: #fef2f2; 
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 2rem;
   word-wrap: break-word;
 }
 
-/* Button override to ensure link behaves like a block element */
 .error-card .btn {
   text-decoration: none;
   display: inline-block;
@@ -947,13 +881,9 @@ input[type="file"].form-input {
 }
 
 
-
-/* =========================================
-   AUTHENTICATION CARDS
-   ========================================= */
 .auth-card {
   width: 100%;
-  max-width: 420px; /* Narrower than the upload card for a tighter look */
+  max-width: 420px; 
   background: #ffffff;
   border: 1px solid #eaeaea;
   border-radius: 12px;
@@ -1003,9 +933,6 @@ input[type="file"].form-input {
   color: #333;
 }
 
-/* =========================================
-   PROFILE EDIT PREVIEW
-   ========================================= */
 .profile-edit-preview {
   display: flex;
   justify-content: center;
@@ -1022,9 +949,6 @@ input[type="file"].form-input {
 }
 
 
-/* =========================================
-   DASHBOARD / ADMIN PANEL
-   ========================================= */
 .dashboard-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -1054,7 +978,6 @@ input[type="file"].form-input {
   font-size: 1rem;
 }
 
-/* STATS GRID */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -1104,7 +1027,6 @@ input[type="file"].form-input {
   line-height: 1.1;
 }
 
-/* ADMIN TABLES */
 .admin-section {
   background: #ffffff;
   border: 1px solid #eaeaea;
@@ -1173,19 +1095,14 @@ input[type="file"].form-input {
   color: #059669;
 }
 
-/* Add to style.css */
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-
-/* =========================================
-   CUSTOM ACTION POPOVERS (Modals)
-   ========================================= */
 .action-popover {
-  margin: auto; /* Centers the native popover on the screen */
+  margin: auto;
   padding: 1.5rem;
   border: 1px solid #eaeaea;
   border-radius: 12px;
@@ -1195,7 +1112,6 @@ button:disabled {
   max-width: 400px;
 }
 
-/* Blurs and darkens the background when open */
 .action-popover::backdrop {
   background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
@@ -1237,5 +1153,37 @@ button:disabled {
 }
 
 .danger-text {
-  color: #dc2626; /* Matches your danger-btn aesthetic */
+  color: #dc2626; 
+}
+
+
+.empty-state-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  margin: 1.5rem 0;
+  background-color: rgba(0, 0, 0, 0.03); 
+  border: 1px dashed rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+}
+
+.empty-state-text {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.edited-badge {
+  font-style: italic;
+  opacity: 0.7;
+  margin-left: 0.3rem;
 }

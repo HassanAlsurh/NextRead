@@ -23,6 +23,12 @@
     <% } %>
   </div>
 
+  <% if (books.length === 0) { %>
+          <div class="empty-state-container">
+            <div class="empty-state-icon">💬</div>
+            <p class="empty-state-text">Looks empty... why don't you be the first to share everyone your favorite book?</p>
+          </div>
+          <% } else { %>
   <div class="browse-grid">
     <% books.forEach((item) => { %>
       <article class="book-card">
@@ -69,6 +75,7 @@
       </article>
     <% }) %>
   </div>
+  <% } %>
 </main>
 </body>
 </html>

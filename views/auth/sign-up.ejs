@@ -22,7 +22,7 @@
 
         <div class="form-group">
           <label class="form-label" for="password">Password</label>
-          <input class="form-input" type="password" name="password" id="password" required>
+          <input class="form-input" type="password" name="password" id="password" required pattern="(?=.*[A-Za-z])(?=.*\d).{8,}" title="Must be at least 8 characters long and contain at least one letter and one number.">
         </div>
 
         <div class="form-group">

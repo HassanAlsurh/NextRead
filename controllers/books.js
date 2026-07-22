@@ -121,7 +121,6 @@ const addBook = async (req, res) => {
 
     toupload.userId = req.session.user.id;
 
-    // bookCover
     toupload.bookCover = {
       url: uploadedImage.secure_url,
       publicId: uploadedImage.public_id,
