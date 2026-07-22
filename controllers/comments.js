@@ -11,6 +11,7 @@ const newComment = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Comment cannot be empty",
+        pageTitle: "Error",
       });
     }
 
@@ -19,6 +20,7 @@ const newComment = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please log in to comment",
+        pageTitle: "Error",
       });
     }
 
@@ -27,6 +29,7 @@ const newComment = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "An error happened, please refresh the page!",
+        pageTitle: "Error",
       });
     }
 
@@ -46,6 +49,7 @@ const editComment = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Comment cannot be empty",
+        pageTitle: "Error",
       });
     }
 
@@ -67,6 +71,7 @@ const deleteComment = async (req, res) => {
     if (!commentToDelete) {
       return res.render("error.ejs", {
         msg: "Id not found",
+        pageTitle: "Error",
       });
     }
     res.redirect(`/books/${req.params.bookId}`);

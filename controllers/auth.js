@@ -28,12 +28,14 @@ const uploadImage = (fileBuffer) => {
 const home = (req, res) => {
   res.render("home.ejs", {
     user: req.session.user,
+    pageTitle: "Home",
   });
 };
 
 const showSignUpForm = (req, res) => {
   res.render("auth/sign-up.ejs", {
     user: req.session.user,
+    pageTitle: "Sign Up",
   });
 };
 
@@ -49,10 +51,12 @@ const signUp = async (req, res) => {
     if (userInDatabase) {
       return res.render("error.ejs", {
         msg: "This username already exists",
+        pageTitle: "Error",
       });
     } else if (emailInDatabase) {
       res.render("error.ejs", {
         msg: "This email already exists",
+        pageTitle: "Error",
       });
     }
   } else if (req.body.password === req.body.confirmPassword) {
@@ -85,6 +89,7 @@ const signUp = async (req, res) => {
     );
     res.render("error.ejs", {
       msg: "Password and confirm password are not the same",
+      pageTitle: "Error",
     });
   }
 };
@@ -92,6 +97,7 @@ const signUp = async (req, res) => {
 const showSignInForm = (req, res) => {
   res.render("auth/sign-in.ejs", {
     user: req.session.user,
+    pageTitle: "Sign In",
   });
 };
 
@@ -101,7 +107,10 @@ const signIn = async (req, res) => {
   });
 
   if (!userInDatabase) {
-    return res.send("User does not exist");
+    return res.render("error.ejs", {
+      msg: "User does not exist",
+      pageTitle: "Error",
+    });
   }
 
   const validPassword = await bcrypt.compare(
@@ -110,7 +119,10 @@ const signIn = async (req, res) => {
   );
 
   if (!validPassword) {
-    return res.send("Login failed");
+    return res.render("error.ejs", {
+      msg: "Login failed",
+      pageTitle: "Error",
+    });
   }
 
   req.session.user = {
@@ -131,7 +143,10 @@ const signOut = (req, res) => {
 };
 
 const showEditUser = async (req, res) => {
-  res.render("auth/edit-user.ejs", { user: req.session.user });
+  res.render("auth/edit-user.ejs", {
+    user: req.session.user,
+    pageTitle: "Edit Profile",
+  });
 };
 
 const editUser = async (req, res) => {
@@ -144,7 +159,7 @@ const editUser = async (req, res) => {
     const currentUser = await User.findById(req.session.user.id);
 
     if (!currentUser) {
-      return res.render("auth/sign-in.ejs");
+      return res.render("auth/sign-in.ejs", { pageTitle: "Sign In" });
     }
 
     if (req.body) {
@@ -167,11 +182,13 @@ const editUser = async (req, res) => {
           } else {
             return res.render("error.ejs", {
               msg: "password and confirm password are not identical",
+              pageTitle: "Error",
             });
           }
         } else {
           return res.render("error.ejs", {
             msg: "invalid password",
+            pageTitle: "Error",
           });
         }
       }
@@ -188,6 +205,7 @@ const editUser = async (req, res) => {
         } else {
           return res.render("error.ejs", {
             msg: "Username is taken",
+            pageTitle: "Error",
           });
         }
       }
@@ -229,14 +247,15 @@ const dashboard = async (req, res) => {
   const allUsers = await User.find();
   const allBooks = await Book.find();
   const allComments = await Comment.find();
-  console.log('++=================================++',allUsers);
-  console.log('++=================================++',allBooks);
-  console.log('++=================================++',allComments);
-  
+  console.log("++=================================++", allUsers);
+  console.log("++=================================++", allBooks);
+  console.log("++=================================++", allComments);
+
   res.render("dashboard.ejs", {
     allUsers,
     allBooks,
     allComments,
+    pageTitle: "Dashboard",
   });
 };
 

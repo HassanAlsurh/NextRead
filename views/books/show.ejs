@@ -21,12 +21,15 @@
 
         <header class="detail-header">
           <div class="poster-details">
-            <img class="poster-pfp" src="<%= poster.profilePicture.url %>" alt="Profile">
+            <img class="poster-pfp" src="<%= poster.profilePicture?.url || 'https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg' %>" alt="Profile">
             <span class="poster-username">
               <%= poster.username %>
             </span>
           </div>
 
+          <% if (user) { %>
+           
+          
           <% if (book.userId._id.equals(user.id) || admin ) { %>
             <div class="owner-controls">
               <% if (book.userId._id.equals(user.id)) { %>
@@ -58,6 +61,7 @@
                 </form>
               </div>
             </div>
+            <% } %>
             <% } %>
         </header>
 
@@ -102,6 +106,7 @@
                 <% } %>
             </div>
 
+            <% if (user) { %>
             <div class="interactions-container">
               <form action="/books/<%= book._id %>/like/<%= user.id %>?_method=<%= userHasLiked ? 'DELETE' : 'PUT' %>"
                 method="POST">
@@ -124,6 +129,7 @@
                 </button>
               </form>
             </div>
+            <% } %>
           </div>
         </div>
       </article>
@@ -142,7 +148,7 @@
         <div class="comments-list">
           <% comments.forEach((item)=> { %>
             <article class="single-comment">
-              <img class="commenter-pfp" src="<%= item.userId.profilePicture.url %>" alt="<%= item.userId.username %>">
+              <img class="commenter-pfp" src="<%= item.userId?.profilePicture?.url || 'https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg' %>" alt="<%= item.userId.username %>">
 
               <div class="comment-body">
                 <div class="comment-header">
@@ -160,7 +166,7 @@
                 <p class="comment-text">
                   <%= item.comment %>
                 </p>
-
+                <% if (user) { %>
                 <% if (item.userId._id.equals(user.id) || admin ) { %>
                   <div class="comment-controls">
                     <% if (item.userId._id.equals(user.id)) { %>
@@ -168,9 +174,7 @@
                       <% } %>
                         <button type="button" class="action-link danger-text"
                           popovertarget="delete-comment-modal-<%= item._id %>">Delete</button>
-                        <!-- <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=DELETE" method="post">
-                          <button type="submit" class="action-link danger-text">Delete</button>
-                        </form> -->
+
                   </div>
                   <div id="delete-comment-modal-<%= item._id %>" popover class="action-popover">
                     <div class="popover-header">
@@ -212,6 +216,7 @@
                         </form>
                       </div>
                       <% } %>
+                        <% } %>
                         <% } %>
                   </div>
             </article>

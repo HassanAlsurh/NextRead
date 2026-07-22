@@ -9,7 +9,11 @@ const showAllBooks = async (req, res) => {
   const foundBooks = await Book.find({});
   const allUsers = await User.find();
   console.log(foundBooks);
-  res.render("books/index.ejs", { books: foundBooks, allUsers });
+  res.render("books/index.ejs", {
+    books: foundBooks,
+    allUsers,
+    pageTitle: "Index",
+  });
 };
 const showBook = async (req, res) => {
   console.log("book Id:  >>>", req.params.bookId);
@@ -19,12 +23,18 @@ const showBook = async (req, res) => {
   const postComments = await Comment.find({
     bookId: req.params.bookId,
   }).populate("userId");
-  const likedByUser = await currentBook.likedByUsers.some((user) => {
-    return user.equals(req.session.user.id);
-  });
-  const dislikedByUser = await currentBook.dislikedByUsers.some((user) => {
-    return user.equals(req.session.user.id);
-  });
+
+  const dislikedByUser = false;
+  const likedByUser = false;
+
+  if (req.session.user) {
+    const likedByUser = await currentBook.likedByUsers.some((user) => {
+      return user.equals(req.session.user.id);
+    });
+    const dislikedByUser = await currentBook.dislikedByUsers.some((user) => {
+      return user.equals(req.session.user.id);
+    });
+  }
 
   res.render("books/show.ejs", {
     book: currentBook,
@@ -32,15 +42,17 @@ const showBook = async (req, res) => {
     comments: postComments,
     userHasLiked: likedByUser,
     userHasDisliked: dislikedByUser,
+    pageTitle: currentBook.bookTitle,
   });
 };
 const showNewBook = async (req, res) => {
-  res.render("books/new.ejs");
+  res.render("books/new.ejs", { pageTitle: "Create a post" });
 };
 const showEditbook = async (req, res) => {
   const currentBook = await Book.findById(req.params.bookId);
   res.render("books/edit.ejs", {
     book: currentBook,
+    pageTitle: `Edit ${currentBook.bookTitle}`,
   });
 };
 const addBook = async (req, res) => {
@@ -48,6 +60,7 @@ const addBook = async (req, res) => {
     if (!req.file) {
       return res.render("error.ejs", {
         msg: "Please select an image.",
+        pageTitle: "Error",
       });
     }
     const uploadedImage = await uploadImage(req.file.buffer);
@@ -59,6 +72,7 @@ const addBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the Book Title.",
+        pageTitle: "Error",
       });
     }
     if (req.body.bookAuthor) {
@@ -66,6 +80,7 @@ const addBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the Book Author.",
+        pageTitle: "Error",
       });
     }
 
@@ -82,6 +97,7 @@ const addBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please select at least 1 genre.",
+        pageTitle: "Error",
       });
     }
 
@@ -90,6 +106,7 @@ const addBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the summary.",
+        pageTitle: "Error",
       });
     }
 
@@ -98,6 +115,7 @@ const addBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the User Thoughts.",
+        pageTitle: "Error",
       });
     }
 
@@ -122,6 +140,7 @@ const editBook = async (req, res) => {
     if (!foundBook) {
       return res.render("error.ejs", {
         msg: "Unable to find post.",
+        pageTitle: "Error",
       });
     }
     console.log("book owner id:>>>>>>>>>>>>>>>>>>", foundBook.userId);
@@ -130,6 +149,7 @@ const editBook = async (req, res) => {
     if (!foundBook.userId.equals(req.session.user.id)) {
       return res.render("error.ejs", {
         msg: "You do not have the permission to edit this post.",
+        pageTitle: "Error",
       });
     }
 
@@ -151,6 +171,7 @@ const editBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the Book Title.",
+        pageTitle: "Error",
       });
     }
     if (req.body.bookAuthor) {
@@ -158,6 +179,7 @@ const editBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the Book Author.",
+        pageTitle: "Error",
       });
     }
 
@@ -174,6 +196,7 @@ const editBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please select at least 1 genre.",
+        pageTitle: "Error",
       });
     }
 
@@ -182,6 +205,7 @@ const editBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the summary.",
+        pageTitle: "Error",
       });
     }
 
@@ -190,6 +214,7 @@ const editBook = async (req, res) => {
     } else {
       return res.render("error.ejs", {
         msg: "Please add the User Thoughts.",
+        pageTitle: "Error",
       });
     }
 
@@ -213,19 +238,21 @@ const editBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   try {
     const bookToDelete = await Book.findById(req.params.bookId);
-    const currentUser = await User.findById(req.session.user.id)
+    const currentUser = await User.findById(req.session.user.id);
     if (!bookToDelete) {
       return res.render("error.ejs", {
         msg: "Post does not exist.",
+        pageTitle: "Error",
       });
     }
 
-    console.log('Current user is: >>>>>>>>>>>>>>>>>>>',currentUser);
-    
-    if (currentUser.role !== 'admin'){
-      if (!bookToDelete.userId.equals(req.session.user.id) ) {
+    console.log("Current user is: >>>>>>>>>>>>>>>>>>>", currentUser);
+
+    if (currentUser.role !== "admin") {
+      if (!bookToDelete.userId.equals(req.session.user.id)) {
         return res.render("error.ejs", {
           msg: "You do not have permission to delete this post.",
+          pageTitle: "Error",
         });
       }
     }
@@ -241,6 +268,7 @@ const deleteBook = async (req, res) => {
     console.log(error);
     res.render("error.ejs", {
       msg: "The Post could not be deleted.",
+      pageTitle: "Error",
     });
   }
 };

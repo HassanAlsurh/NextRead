@@ -4,8 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentication App</title>
+    <title>ReadNext - <%= locals.pageTitle ? pageTitle : ' ' %></title>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.default.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="/media/favicon.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -38,12 +41,14 @@
                             </form>
 
                             <div class="nav-pfp">
+                                <a href="/auth/edit">
                                 <% if (user.image) { %>
                                     <img src="<%= user.image %>" alt="User's Profile Picture">
                                     <% } else { %>
                                         <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg"
                                             alt="Default Profile Picture">
                                         <% } %>
+                                    </a>
                             </div>
 
                             <% } else { %>

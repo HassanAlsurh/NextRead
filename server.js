@@ -99,6 +99,7 @@ app.delete(
 app.get("/*splat", (req, res) => {
   res.render("error.ejs", {
     msg: "404 Not Found",
+    pageTitle: 'Error'
   });
 });
 // =====================================================
