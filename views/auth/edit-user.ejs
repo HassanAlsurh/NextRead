@@ -1,84 +1,57 @@
+<%- include("../partials/nav.ejs") %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Account Details</title>
+</head>
+<body>
+  <main class="form-page-container">
+    <section class="auth-card">
+      <div class="auth-card-header">
+        <h1 class="auth-card-title">Account Details</h1>
+        <p class="auth-card-subtitle">Edit your profile and security settings.</p>
+      </div>
 
-    <%- include("../partials/nav.ejs") %>
-    <main class="page-container">
-      <section class="auth-card">
-        <div class="auth-card-header">
-          <h1 class="auth-card-title">Account Details..</h1>
-          <p class="auth-card-subtitle">Edit your account details</p>
+      <form class="auth-form" action="/auth/<%= user.id %>/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+        
+        <div class="profile-edit-preview">
+          <% if (user.image) { %>
+            <img src="<%= user.image %>" alt="<%= user.username %>'s profile picture">
+          <% } else { %>
+            <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg" alt="Default profile picture">
+          <% } %>
         </div>
 
-        <form
-          class="auth-form"
-          action="/auth/<%= user.id %>/edit?_method=PUT"
-          method="POST"
-          enctype="multipart/form-data"
-        >
-        <center>
-          <div class='Edit-Profile-PFP'>
-            <% if (user.image) { %>
-              <img src="<%= user.image %>" alt="User's profile picture" >
-            <% } else {%>
-            <img src="https://res.cloudinary.com/iiye4e2g/image/upload/v1784386270/defualtPFP_z73q31.jpg" alt="Default profile picture" >
-            <% } %>
-          </div>
-        </center>
-          <div class="form-group">
-            <label for="image">Profile Picture</label>
-            <input
-              type="file"
-              name="image"
-              id="image"
-              accept="image/jpeg,image/png,image/webp"
-            />
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="image">Change Profile Picture</label>
+          <input class="form-input" type="file" name="image" id="image" accept="image/jpeg,image/png,image/webp">
+        </div>
 
-          <div class="form-group">
-            <label class="form-label" for="username">Username</label>
-            <input
-              class="form-input"
-              type="text"
-              name="username"
-              id="username"
-              value="<%= user.username %>"
-            />
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="username">Username</label>
+          <input class="form-input" type="text" name="username" id="username" value="<%= user.username %>" required>
+        </div>
 
-          <div class="form-group">
-            <label class="form-label" for="CurrentPassword"
-              >Current Password</label
-            >
-            <input
-              class="form-input"
-              type="password"
-              name="CurrentPassword"
-              id="CurrentPassword"
-            />
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="CurrentPassword">Current Password</label>
+          <input class="form-input" type="password" name="CurrentPassword" id="CurrentPassword">
+        </div>
 
-          <div class="form-group">
-            <label class="form-label" for="NewPassword">New Password</label>
-            <input
-              class="form-input"
-              type="password"
-              name="NewPassword"
-              id="NewPassword"
-            />
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="NewPassword">New Password</label>
+          <input class="form-input" type="password" name="NewPassword" id="NewPassword">
+        </div>
 
-          <div class="form-group">
-            <label class="form-label" for="confirmNewPassword">Confirm New Password</label>
-            <input
-              class="form-input"
-              type="password"
-              name="confirmNewPassword"
-              id="confirmNewPassword"
-            />
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="confirmNewPassword">Confirm New Password</label>
+          <input class="form-input" type="password" name="confirmNewPassword" id="confirmNewPassword">
+        </div>
 
-          <button class="primary-button" type="submit">Confirm</button>
-
-        </form>
-      </section>
-    </main>
-  </body>
+        <button class="btn primary-btn" style="width: 100%; margin-top: 1rem;" type="submit">Save Changes</button>
+      </form>
+    </section>
+  </main>
+</body>
 </html>
