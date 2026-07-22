@@ -63,10 +63,10 @@ app.get("/books", booksCtrl.showAllBooks); //done
 app.get("/books/new", isSignedIn, booksCtrl.showNewBook); //done
 app.get("/books/:bookId", booksCtrl.showBook); //done
 app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook); //done
-
 app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook); //done
 app.put('/books/:bookId',isSignedIn, upload.single("image"), booksCtrl.editBook) 
 app.delete('/books/:bookId', isSignedIn, booksCtrl.deleteBook) 
+
 // Comments
 app.post('/books/:bookId/comments', isSignedIn, commentsCtrl.newComment)
 app.put('/books/:bookId/comments/:commentId',  isSignedIn, commentsCtrl.editComment)

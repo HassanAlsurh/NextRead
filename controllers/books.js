@@ -7,20 +7,32 @@ const upload = require("../config/multer.js");
 
 const showAllBooks = async (req, res) => {
   const foundBooks = await Book.find({});
-  const allUsers = await User.find() 
+  const allUsers = await User.find();
   console.log(foundBooks);
   res.render("books/index.ejs", { books: foundBooks, allUsers });
 };
 const showBook = async (req, res) => {
   console.log("book Id:  >>>", req.params.bookId);
-  
-  const currentBook = await Book.findById(req.params.bookId);
-  const poserDetails = await User.findById(currentBook.userId)
-  const postComments = await Comment.find({bookId: req.params.bookId}).populate('userId')
-// HERE ========================================================================================================================================================================
-  console.log("poster details:  >>>", poserDetails);
 
-  res.render("books/show.ejs", { book: currentBook, poster: poserDetails, comments: postComments });
+  const currentBook = await Book.findById(req.params.bookId);
+  const poserDetails = await User.findById(currentBook.userId);
+  const postComments = await Comment.find({
+    bookId: req.params.bookId,
+  }).populate("userId");
+  const likedByUser = await currentBook.likedByUsers.some((user) => {
+    return user.equals(req.session.user.id);
+  });
+  const dislikedByUser = await currentBook.dislikedByUsers.some((user) => {
+    return user.equals(req.session.user.id);
+  });
+
+  res.render("books/show.ejs", {
+    book: currentBook,
+    poster: poserDetails,
+    comments: postComments,
+    userHasLiked: likedByUser,
+    userHasDisliked: dislikedByUser,
+  });
 };
 const showNewBook = async (req, res) => {
   res.render("books/new.ejs");
@@ -104,7 +116,6 @@ const addBook = async (req, res) => {
     console.log(error.message);
   }
 };
-
 const editBook = async (req, res) => {
   try {
     const foundBook = await Book.findById(req.params.bookId);
@@ -184,7 +195,6 @@ const editBook = async (req, res) => {
 
     await foundBook.save();
 
-
     if (req.file && oldPublicId) {
       try {
         await cloudinary.uploader.destroy(oldPublicId, {
@@ -229,7 +239,6 @@ const deleteBook = async (req, res) => {
     });
   }
 };
-
 const uploadImage = (fileBuffer) => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.uploader.upload_stream(
@@ -250,6 +259,7 @@ const uploadImage = (fileBuffer) => {
   });
 };
 
+
 module.exports = {
   showAllBooks,
   showBook,
@@ -258,4 +268,8 @@ module.exports = {
   addBook,
   editBook,
   deleteBook,
+  addLike,
+  addislike,
+  removelike,
+  removeDislike,
 };

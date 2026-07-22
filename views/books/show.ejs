@@ -51,8 +51,21 @@
         </div>
 
         <div class="interactions-container">
-          <!-- likes an ddislikes -->
-        </div>
+          
+<form action="/books/<%= book._id %>/like/<%= user.id %>?_method=<%= userHasLiked ? 'DELETE' : 'PUT' %>" method="POST" class="interaction-form">
+    <button type="submit" class="interaction-btn like-btn <%= userHasLiked ? 'active' : '' %>">
+      <span class="icon">👍</span> 
+      <span class="count"><%= book.likedByUsers.length %></span>
+    </button>
+  </form>
+
+  <form action="/books/<%= book._id %>/dislike/<%= user.id %>?_method=<%= userHasDisliked ? 'DELETE' : 'PUT' %>" method="POST" class="interaction-form">
+    <button type="submit" class="interaction-btn dislike-btn <%= userHasDisliked ? 'active' : '' %>">
+      <span class="icon">👎</span> 
+      <span class="count"><%= book.dislikedByUsers.length %></span>
+    </button>
+  </form>        
+      </div>
 
   </div>
 

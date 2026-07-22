@@ -23,13 +23,15 @@ const bookSchema = new mongoose.Schema(
     },
     genre: {
       // type: enum!!,
-      type: [{
-        type: String,
-        enum: {
-          values: BOOK_GENRES,
-          message: '{VALUE} is not a valid book genre.'
-        }
-      }],
+      type: [
+        {
+          type: String,
+          enum: {
+            values: BOOK_GENRES,
+            message: "{VALUE} is not a valid book genre.",
+          },
+        },
+      ],
       required: true,
     },
     summary: {
@@ -45,6 +47,18 @@ const bookSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    likedByUsers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    dislikedByUsers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true },
 );
