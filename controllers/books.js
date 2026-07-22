@@ -213,16 +213,21 @@ const editBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   try {
     const bookToDelete = await Book.findById(req.params.bookId);
+    const currentUser = await User.findById(req.session.user.id)
     if (!bookToDelete) {
       return res.render("error.ejs", {
         msg: "Post does not exist.",
       });
     }
 
-    if (!bookToDelete.userId.equals(req.session.user.id)) {
-      return res.render("error.ejs", {
-        msg: "You do not have permission to delete this post.",
-      });
+    console.log('Current user is: >>>>>>>>>>>>>>>>>>>',currentUser);
+    
+    if (currentUser.role !== 'admin'){
+      if (!bookToDelete.userId.equals(req.session.user.id) ) {
+        return res.render("error.ejs", {
+          msg: "You do not have permission to delete this post.",
+        });
+      }
     }
 
     if (bookToDelete.bookCover?.publicId) {

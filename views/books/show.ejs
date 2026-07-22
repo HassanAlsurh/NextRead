@@ -21,12 +21,15 @@
             </span>
           </div>
 
-          <% if (book.userId._id.equals(user.id)) { %>
+          <% if (book.userId._id.equals(user.id) || admin ) { %>
             <div class="owner-controls">
-              <a href="/books/<%= book._id %>/edit" class="btn secondary-btn small-btn">Edit</a>
-              <form action="/books/<%= book._id %>/?_method=DELETE" method="post" style="display: inline;">
-                <button type="submit" class="btn danger-btn small-btn">Delete</button>
-              </form>
+              <% if (book.userId._id.equals(user.id)) { %>
+                <a href="/books/<%= book._id %>/edit" class="btn secondary-btn small-btn">Edit</a>
+                <% } %>
+
+                  <form action="/books/<%= book._id %>/?_method=DELETE" method="post" style="display: inline;">
+                    <button type="submit" class="btn danger-btn small-btn">Delete</button>
+                  </form>
             </div>
             <% } %>
         </header>
@@ -131,32 +134,38 @@
                   <%= item.comment %>
                 </p>
 
-                <% if (item.userId._id.equals(user.id)) { %>
+                <% if (item.userId._id.equals(user.id) || admin ) { %>
                   <div class="comment-controls">
-                    <button type="button" class="action-link" popovertarget="edit-modal-<%= item._id %>">Edit</button>
-                    <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=DELETE" method="post">
-                      <button type="submit" class="action-link danger-text">Delete</button>
-                    </form>
+                    <% if (item.userId._id.equals(user.id)) { %>
+                      <button type="button" class="action-link" popovertarget="edit-modal-<%= item._id %>">Edit</button>
+                      <% } %>
+                        <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=DELETE" method="post">
+                          <button type="submit" class="action-link danger-text">Delete</button>
+                        </form>
                   </div>
 
-                  <div id="edit-modal-<%= item._id %>" popover class="edit-popover">
-                    <div class="popover-header">
-                      <h3>Edit Comment</h3>
-                      <button type="button" class="close-btn" popovertarget="edit-modal-<%= item._id %>"
-                        popovertargetaction="hide">&times;</button>
-                    </div>
-                    <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=PUT" method="POST"
-                      class="comment-form">
-                      <textarea class="form-input" name="commentContent" rows="3"
-                        required><%= item.comment %></textarea>
-                      <div class="popover-actions">
-                        <button type="button" class="btn secondary-btn" popovertarget="edit-modal-<%= item._id %>"
-                          popovertargetaction="hide">Cancel</button>
-                        <button type="submit" class="btn primary-btn">Save</button>
+
+                  <% if (item.userId._id.equals(user.id)) { %>
+
+                    <div id="edit-modal-<%= item._id %>" popover class="edit-popover">
+                      <div class="popover-header">
+                        <h3>Edit Comment</h3>
+                        <button type="button" class="close-btn" popovertarget="edit-modal-<%= item._id %>"
+                          popovertargetaction="hide">&times;</button>
                       </div>
-                    </form>
-                  </div>
-                  <% } %>
+                      <form action="/books/<%= book._id %>/comments/<%= item._id %>?_method=PUT" method="POST"
+                        class="comment-form">
+                        <textarea class="form-input" name="commentContent" rows="3"
+                          required><%= item.comment %></textarea>
+                        <div class="popover-actions">
+                          <button type="button" class="btn secondary-btn" popovertarget="edit-modal-<%= item._id %>"
+                            popovertargetaction="hide">Cancel</button>
+                          <button type="submit" class="btn primary-btn">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                    <% } %>
+                      <% } %>
               </div>
             </article>
             <% }) %>
