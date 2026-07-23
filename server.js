@@ -58,14 +58,12 @@ app.put(
   upload.single("image"),
   authCtrl.editUser,
 );
-// Admin only
-app.get("/dashboard", isSignedIn, authCtrl.dashboard); //maybe for later 'Wishlist "2"'====================================================================================
-// Books
-app.get("/books", booksCtrl.showAllBooks); //done
-app.get("/books/new", isSignedIn, booksCtrl.showNewBook); //done
-app.get("/books/:bookId", booksCtrl.showBook); //done
-app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook); //done
-app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook); //done
+app.get("/dashboard", isSignedIn, authCtrl.dashboard); 
+app.get("/books", booksCtrl.showAllBooks); 
+app.get("/books/new", isSignedIn, booksCtrl.showNewBook); 
+app.get("/books/:bookId", booksCtrl.showBook); 
+app.get("/books/:bookId/edit", isSignedIn, booksCtrl.showEditbook); 
+app.post("/books", isSignedIn, upload.single("image"), booksCtrl.addBook); 
 app.put(
   "/books/:bookId",
   isSignedIn,
@@ -95,14 +93,12 @@ app.delete(
   commentsCtrl.deleteComment,
 );
 
-// =====================================================
 app.get("/*splat", (req, res) => {
   res.render("error.ejs", {
     msg: "404 Not Found",
     pageTitle: 'Error'
   });
 });
-// =====================================================
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
